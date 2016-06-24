@@ -5,7 +5,7 @@ close all;
 addpath('akron/');
 addpath('other/');
 
-n_avg = 250;
+n_avg = 50;
 n = 20;
 k = 7;
 M = n-3;

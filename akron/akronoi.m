@@ -12,7 +12,7 @@ function [x_kr, x_l1] = akronoi(A, y, epsilon)
 %
 %  LICENSE
 %    MIT
-sparsity_threshold = .05;
+sparsity_threshold = 1e-3;
 X = null(A);
 s = size(X, 2); % "s=dim(ker(A))"
 n = size(A, 2);

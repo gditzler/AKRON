@@ -12,7 +12,7 @@ function [x_kr, x_l1] = akron(A, y, shift)
 %
 %  LICENSE
 %    MIT
-sparsity_threshold = .05;
+sparsity_threshold = 1e-3;
 if nargin == 2 
   shift = 3;
 end
