@@ -2,14 +2,14 @@ function [A, x, y] = cs_model(m, n, k, type)
 % [A, x, y] = cs_model(m, n, k)
 % 
 %  INPUTS 
-%  @m: size(A,1):   
-%  @n: size(A,2): 
-%  @k: the k in k-sparse  
+%   m: size(A,1):   
+%   n: size(A,2): 
+%   k: the k in k-sparse  
 %
 %  OUTPUTS
-%  @A: measurement matrix sampled from Normal(0,1)
-%  @x: sparsest solution  
-%  @y: observation vector 
+%   A: measurement matrix sampled from Normal(0,1)
+%   x: sparsest solution  
+%   y: observation vector 
 %
 %
 %  MAINTAINER
