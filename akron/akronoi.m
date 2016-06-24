@@ -12,7 +12,7 @@ function [x_kr, x_l1] = akronoi(A, y, epsilon)
 %
 %  LICENSE
 %    MIT
-
+sparsity_threshold = .05;
 X = null(A);
 s = size(X, 2); % "s=dim(ker(A))"
 n = size(A, 2);
@@ -69,7 +69,7 @@ parfor r = 1:size(combrows, 1)
     end
   end
   
-  sp(r) = sum(abs(x_kr_final) > 10e-15);  % sparsity 
+  sp(r) = sum(abs(x_kr_final) > sparsity_threshold);  % sparsity 
 end
 [~, i] = sort(sp);
 

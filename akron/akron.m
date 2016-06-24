@@ -12,18 +12,18 @@ function [x_kr, x_l1] = akron(A, y, shift)
 %
 %  LICENSE
 %    MIT
-
+sparsity_threshold = .05;
 if nargin == 2 
   shift = 3;
 end
 X = null(A);
-s = size(X,2); % "s=dim(ker(A))"
-n = size(A,2);
+s = size(X, 2); % "s=dim(ker(A))"
+n = size(A, 2);
 
 % minimize the l1-norm
 cvx_begin quiet
   variable x(n,1)
-  minimize(norm(x,1))
+  minimize(norm(x, 1))
   subject to
     A*x == y; 
 cvx_end
@@ -45,7 +45,7 @@ parfor r = 1:size(combrows, 1)
   xhat = A(:, j)\y;
   x_kr = zeros(n, 1);
   x_kr(j) = xhat;
-  sp(r) = sum(abs(x_kr) > 10e-15);  % sparisty 
+  sp(r) = sum(abs(x_kr) > sparsity_threshold);  % sparisty 
 end
 [~, i] = sort(sp);
 
