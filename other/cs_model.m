@@ -24,7 +24,8 @@ if strcmp(type, 'Gaussian')
     A = randn(m,n);
   end
   x = zeros(n,1);
-  p = randn(k,1);   % generate "k" non-zero elements of "x"
+  %p = randn(k,1);   % generate "k" non-zero elements of "x"
+  p = sign(randn(k,1)).*(1+abs(randn(k,1)));
   rp = randperm(n); % generate random permutations
   x(rp(1:k)) = p;   % place the "k" non-zero elements in random positions in "x"
   y = A*x;          % generate the linear model: "y=Ax"
@@ -34,7 +35,8 @@ elseif strcmp(type, 'GaussianNoise')
     A = randn(m,n);
   end
   x = zeros(n,1);
-  p = randn(k,1);   % generate "k" non-zero elements of "x"
+  %p = randn(k,1);   % generate "k" non-zero elements of "x"
+  p = sign(randn(k,1)).*(1+abs(randn(k,1)));
   rp = randperm(n); % generate random permutations
   x(rp(1:k)) = p;   % place the "k" non-zero elements in random positions in "x"
   
