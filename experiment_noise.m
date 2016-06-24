@@ -11,8 +11,8 @@ k = 7;
 M = n-3;
 k_alg = 9;
 epsilon = 0.05;
-delete(gcp('nocreate'));
-parpool(15);
+% delete(gcp('nocreate'));
+% parpool(15);
 
 
 errs_clean = zeros(7, M);
@@ -39,7 +39,7 @@ for i = 1:n_avg
     [A, x, y] = cs_model(m, n, k, 'Gaussian');
     
     % run kernel reconstruction (kron)
-    [~, ~, x_kron_spar] = kron(A, x, y);
+    [~, ~, x_kron_spar] = kron_cs(A, x, y);
     % run cosamp
     x_cosamp = cosamp(A, y, k_alg, errFcn, opts);
     % run omp
@@ -84,7 +84,7 @@ for i = 1:n_avg
     % generate noisy data s
     [A, x, y] = cs_model(m, n, k, 'GaussianNoise');
     % run kernel reconstruction (kron)
-    [~, ~, x_kron_spar] = kron(A, x, y);
+    [~, ~, x_kron_spar] = kron_cs(A, x, y);
     % run cosamp
     x_cosamp = cosamp(A, y, k_alg, errFcn, opts);
     % run omp
