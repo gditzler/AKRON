@@ -22,7 +22,7 @@ cvx_begin quiet
   variable x(n,1)
   minimize(norm(x, 1))
   subject to
-    norm(A*x - y, 2) <= epsilon;
+    sum_square(A*x - y, 2) <= epsilon;
 cvx_end
 
 % save the solution to the l1 problem before approximating the kernel

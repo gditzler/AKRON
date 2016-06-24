@@ -1,4 +1,4 @@
-function [min_err, x_min_error, x_sparsest, min_zeros, Xsol] = kron(A, x, y)
+function [min_err, x_min_error, x_sparsest, min_zeros, Xsol] = kron_cs(A, x, y)
 %  [min_err, x_min_error, x_sparsest, min_zeros, Xsol] = kr(A, x, y)
 % 
 %  INPUTS 
