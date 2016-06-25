@@ -2,10 +2,12 @@ clc;
 clear;
 close all;
 
+rng(1);
+
 addpath('akron/');
 addpath('other/');
 
-n_avg = 50;
+n_avg = 200;
 n = 20;
 k = 7;
 M = n-3;
@@ -33,7 +35,7 @@ for i = 1:n_avg
   disp(['Running trial ',num2str(i), ' of ', num2str(n_avg)]);
 
   mm = 1;
-  for m = 7:M
+  for m = 5:M
     
     % generate data from the Gaussian CS model 
     [A, x, y] = cs_model(m, n, k, 'Gaussian');
