@@ -33,7 +33,7 @@ for i = 1:n_avg
   disp(['Running trial ',num2str(i), ' of ', num2str(n_avg)]);
 
   mm = 1;
-  for m = 5:M
+  for m = 7:M
     
     % generate data from the Gaussian CS model 
     [A, x, y] = cs_model(m, n, k, 'Gaussian');
@@ -45,7 +45,7 @@ for i = 1:n_avg
     % run omp
     x_omp = omp(A, y, k_alg, errFcn, opts);
     % run akron 
-    [x_akron, x_l1] = akron(A, y);
+    [x_akron, x_l1] = akron(A, y, 0);
     % run akron-noisy
     [x_akronnoi, x_l1n] = akronoi(A, y, epsilon);
 
