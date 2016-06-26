@@ -47,7 +47,7 @@ for i = 1:n_avg
     % run omp
     x_omp = omp(A, y, k_alg, errFcn, opts);
     % run akron 
-    [x_akron, x_l1] = akron(A, y, 0);
+    [x_akron, x_l1] = akron(A, y);
     % run akron-noisy
     [x_akronnoi, x_l1n] = akronoi(A, y, epsilon);
 
