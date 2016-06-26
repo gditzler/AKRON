@@ -1,4 +1,4 @@
-function [min_err, x_min_error, x_sparsest, min_zeros, Xsol] = kron_cs(A, x, y)
+function [min_err, x_min_error, x_sparsest, min_zeros, Xsol, n_mins] = kron_cs(A, x, y)
 %  [min_err, x_min_error, x_sparsest, min_zeros, Xsol] = kr(A, x, y)
 % 
 %  INPUTS 
@@ -60,3 +60,7 @@ x_min_error = Xsol(:,id);
 % the number of nonzero elements in the sparsest solution
 [min_zeros, idx] = min(sparsity); 
 x_sparsest = Xsol(:,idx); 
+
+spmin = min(sparsity);
+n_mins = sum(spmin==sparsity);
+

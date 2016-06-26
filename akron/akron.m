@@ -1,4 +1,4 @@
-function [x_kr, x_l1] = akron(A, y, shift)
+function [x_kr, x_l1, n_mins] = akron(A, y, shift)
 %  [x_kr, x_l1] = l1_approximate_reconstruction(A, y)
 % 
 %  INPUTS 
@@ -40,7 +40,7 @@ combrows = combnk(smallest, s);  % generate combinations of the s+delta indices
 % loop over the possibilites of the s+delta entries that could be tested
 % for being a `zero` entry. 
 sp = zeros(size(combrows, 1), 1);
-for r = 1:size(combrows, 1)
+parfor r = 1:size(combrows, 1)
   j = setdiff(1:n, combrows(r, :));
   xhat = A(:, j)\y;
   x_kr = zeros(n, 1);
@@ -48,6 +48,9 @@ for r = 1:size(combrows, 1)
   sp(r) = sum(abs(x_kr) > sparsity_threshold);  % sparisty 
 end
 [~, i] = sort(sp);
+
+spmin = min(sp);
+n_mins = sum(spmin==sp);
 
 % solve for the sparest solution again
 j = setdiff(1:n, combrows(i(1), :));

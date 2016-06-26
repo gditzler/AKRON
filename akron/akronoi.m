@@ -1,4 +1,4 @@
-function [x_kr, x_l1] = akronoi(A, y, epsilon)
+function [x_kr, x_l1, n_mins] = akronoi(A, y, epsilon)
 %  [x_kr, x_l1] = akronoi(A, y, shift)
 % 
 %  INPUTS 
@@ -73,6 +73,8 @@ parfor r = 1:size(combrows, 1)
 end
 [~, i] = sort(sp);
 
+spmin = min(sp);
+n_mins = sum(spmin==sp);
 
 % solve for the sparest solution again
 j = setdiff(1:n, combrows(i(1), :));
