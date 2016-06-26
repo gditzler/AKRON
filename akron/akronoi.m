@@ -52,6 +52,8 @@ combrows = combnk(smallest, s);  % generate combinations of the s+delta indices
 % loop over the possibilites of the s+delta entries that could be tested
 % for being a `zero` entry. 
 sp = zeros(size(combrows, 1), 1);
+err = zeros(size(combrows, 1), 1);
+
 parfor r = 1:size(combrows, 1)
   j = setdiff(1:n, combrows(r, :));
 
@@ -70,6 +72,7 @@ parfor r = 1:size(combrows, 1)
   end
   
   sp(r) = sum(abs(x_kr_final) > sparsity_threshold);  % sparsity 
+  err(r) = norm(A*x_kr-y, 2)^2;
 end
 [~, i] = sort(sp);
 
