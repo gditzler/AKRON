@@ -4,6 +4,11 @@ close all
 
 load mat/large_Gaussiank12.mat
 
+lw = 2;
+ms = 20;
+fs = 20;
+
+
 % CoSamp
 % OMP
 % AKRON
@@ -11,10 +16,10 @@ load mat/large_Gaussiank12.mat
 h = figure; 
 hold on;
 box on;
-plot(n_set, errs(1,:), 'bs-', 'LineWidth', 2)
-plot(n_set, errs(2,:), 'k^-', 'LineWidth', 2)
-plot(n_set, errs(3,:), 'cp-', 'LineWidth', 2)
-plot(n_set, errs(4,:), 'rs-', 'LineWidth', 2)
+plot(n_set, errs(1,:), 'bs-', 'LineWidth', lw, 'MarkerSize', ms) % CoSaMP
+plot(n_set, errs(2,:), 'k^-', 'LineWidth', lw, 'MarkerSize', ms) % OMP
+plot(n_set, errs(3,:), 'cp-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
+plot(n_set, errs(4,:), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % L1
 legend('CoSamp', 'OMP', 'AKRON', 'L1', 'Location', 'best')
 xlabel('n', 'FontSize', 20);
 ylabel('reconstruction error', 'FontSize', 20);
