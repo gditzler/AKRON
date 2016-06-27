@@ -118,6 +118,7 @@ for i = 1:n_avg
     
     mm = mm+1;
   end
+  save('mat/noise_experiments.mat');
 end
 
 % save('mat/noise_experiments.mat');
