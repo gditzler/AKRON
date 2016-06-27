@@ -47,15 +47,21 @@ parfor r = 1:size(combrows, 1)
   x_kr = zeros(n, 1);
   x_kr(j) = xhat;
   sp(r) = sum(abs(x_kr) > sparsity_threshold);  % sparisty 
-  err(r) = norm(A*x_kr-y, 2)^2;
+  err(r) = norm(x_kr, 1);
 end
 [~, i] = sort(sp);
 
 spmin = min(sp);
 n_mins = sum(spmin==sp);
-
-% solve for the sparest solution again
-j = setdiff(1:n, combrows(i(1), :));
+if n_mins == 1
+  % solve for the sparest solution again
+  j = setdiff(1:n, combrows(i(1), :));
+else
+  combrows2 = combrows(spmin==sp, :);
+  err2 = err(spmin==sp);
+  [~, jj] = min(err2);
+  j = setdiff(1:n, combrows2(jj(1), :));
+end
 xhat = A(:, j)\y;
 x_kr = zeros(n,1);
 x_kr(j) = xhat;

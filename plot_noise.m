@@ -33,7 +33,7 @@ xlim([7, M])
 ylim([0, 1.5])
 % legend('KR', 'CoSamp', 'OMP', 'AKRON', 'AKRONoi', 'L1', 'L1n', 'Location', 'best');
 legend('KR', 'CoSamp', 'OMP', 'AKRON', 'L1', 'Location', 'best');
-xlabel('p', 'FontSize', fs);
+xlabel('n', 'FontSize', fs);
 ylabel('reconstruction error', 'FontSize', fs);
 set(gca, 'fontsize', fs);
 saveas(h, 'eps/noise_exp_clean.eps', 'eps2c')
