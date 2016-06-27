@@ -8,12 +8,12 @@ addpath('akron/');
 addpath('other/');
 
 
-n_avg = 250;
+n_avg = 100;
 n_set = [50:25:250];
 k_set = floor(.05*n_set);
 M = 20;
 m = 20;
-mp = [.1 .2 .3 .4 .5];
+mp = .1;
 k_alg_set = floor(.1*n_set);
 types = 'Gaussian';
 opts.printEvery = 10000000;
@@ -21,7 +21,7 @@ errFcn = [];
 epsilon = 0.05;
 
 delete(gcp('nocreate'));
-parpool(15);
+parpool(50);
 
 errs = zeros(7, length(n_set));
 errs2 = zeros(7, length(n_set));
@@ -40,6 +40,7 @@ for i = 1:n_avg
     n = n_set(j);
     k = ceil(0.05*n);
     k_alg = k_alg_set(j);
+    m = ceil(mp*n);
 
     [A, x, y] = cs_model(m, n, k, types);
     q = 1;
