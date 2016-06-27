@@ -8,13 +8,14 @@ addpath('akron/');
 addpath('other/');
 
 
-n_avg = 50;
-n_set = [25:25:250];
+n_avg = 250;
+n_set = [50:25:250];
 k_set = floor(.05*n_set);
 M = 20;
 m = 20;
+mp = [.1 .2 .3 .4 .5];
 k_alg_set = floor(.1*n_set);
-types = {'Gaussian'};
+types = 'Gaussian';
 opts.printEvery = 10000000;
 errFcn = [];
 epsilon = 0.05;
@@ -22,82 +23,91 @@ epsilon = 0.05;
 delete(gcp('nocreate'));
 parpool(15);
 
-for t = 1:length(types)
-  errs = zeros(7, length(n_set));
-  errs_no_norm = zeros(7, length(n_set));
-  timez = zeros(7, length(n_set));
-  sparsity = zeros(7, length(n_set));
+errs = zeros(7, length(n_set));
+errs2 = zeros(7, length(n_set));
+errs_no_norm = zeros(7, length(n_set));
+timez = zeros(7, length(n_set));
+sparsity = zeros(7, length(n_set));
 
-  for i = 1:n_avg
-    disp(['Running trial ',num2str(i), ' of ', num2str(n_avg)]);
-    
-    for j = 1:length(n_set)
-      n = n_set(j);
-      k = k_set(j);
-      k_alg = k_alg_set(j);
-      
-      [A, x, y] = cs_model(m, n, k, types{t});
-      q = 1;
+for i = 1:n_avg
+  disp(['Running trial ',num2str(i), ' of ', num2str(n_avg)]);
 
-      % CoSamp
-      disp('CoSaMP')
-      tic;
-      x_hat = cosamp(A, y, k_alg, errFcn, opts);
-      timez(q, j) = timez(q, j) + toc;
-      errs(q, j) = errs(q, j) + per_error(x/norm(x), x_hat/norm(x_hat));
-      errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_hat);
-      sparsity(q, j) = sparsity(q, j) + sum(abs(x_hat) >= sqrt(eps))/numel(x);
-      q = q+1;
+  for j = 1:length(n_set)
 
-      % OMP
-      disp('OMP')
-      tic;
-      x_omp = omp(A, y, k_alg, errFcn, opts);
-      timez(q, j) = timez(q, j) + toc;
-      errs(q, j) = errs(q, j) + per_error(x/norm(x), x_omp/norm(x_omp));
-      errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_omp);
-      sparsity(q, j) = sparsity(q, j) + sum(abs(x_omp) >= sqrt(eps))/numel(x);
-      q = q+1;
 
-      % L1-Approx of KR
-      disp('AKRON')
-      tic;
-      [x_l1kr, x_l1] = akron(A, y);
-      timez(q, j) = timez(q, j) + toc;
-      errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1kr/norm(x_l1kr));
-      errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_l1kr);
-      sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1kr) >= sqrt(eps))/numel(x);
-      q = q+1;
-      
-      errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1/norm(x_l1));
-      errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_l1);
-      sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1) >= sqrt(eps))/numel(x);
-      q = q+1;
-      
-      % L1Noise-Approx of KR
-      %disp('AKRONoi')
-      %tic;
-      %[x_l1kr, x_l1] = akronoi(A, y, epsilon);
-      %timez(q, j) = timez(q, j) + toc;
-      %errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1kr/norm(x_l1kr));
-      %errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x,x_l1kr);
-      %sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1kr) >= sqrt(eps))/numel(x);
-      %q = q+1;
-      
-      %errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1/norm(x_l1));
-      %errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_l1);
-      %sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1) >= sqrt(eps))/numel(x);
-      
-    end
-   save(['mat/large_',types{t}, 'k', num2str(k), '_noise.mat']); 
+    k_alg_set = floor(.1*n_set);
+
+    n = n_set(j);
+    k = ceil(0.05*n);
+    k_alg = k_alg_set(j);
+
+    [A, x, y] = cs_model(m, n, k, types);
+    q = 1;
+    DELTA = 1e-3;
+    x_ind = find(abs(x) > DELTA);
+
+    % CoSamp
+    disp('CoSaMP')
+    tic;
+    x_hat = cosamp(A, y, k_alg, errFcn, opts);
+    timez(q, j) = timez(q, j) + toc;
+    errs(q, j) = errs(q, j) + per_error(x/norm(x), x_hat/norm(x_hat));
+    errs2(q, j) = errs2(q, j) + stability_error(x_ind, find(abs(x_hat)>DELTA), n);
+    errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_hat);
+    sparsity(q, j) = sparsity(q, j) + sum(abs(x_hat) >= sqrt(eps))/numel(x);
+    q = q+1;
+
+    % OMP
+    disp('OMP')
+    tic;
+    x_omp = omp(A, y, k_alg, errFcn, opts);
+    timez(q, j) = timez(q, j) + toc;
+    errs(q, j) = errs(q, j) + per_error(x/norm(x), x_omp/norm(x_omp));
+    errs2(q, j) = errs2(q, j) + stability_error(x_ind, find(abs(x_omp)>DELTA), n);
+    errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_omp);
+    sparsity(q, j) = sparsity(q, j) + sum(abs(x_omp) >= sqrt(eps))/numel(x);
+    q = q+1;
+
+    % L1-Approx of KR
+    disp('AKRON')
+    tic;
+    [x_l1kr, x_l1] = akron(A, y);
+    timez(q, j) = timez(q, j) + toc;
+    errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1kr/norm(x_l1kr));
+    errs2(q, j) = errs2(q, j) + stability_error(x_ind, find(abs(x_l1kr)>DELTA), n);
+    errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_l1kr);
+    sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1kr) >= sqrt(eps))/numel(x);
+    q = q+1;
+
+    errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1/norm(x_l1));
+    errs2(q, j) = errs2(q, j) + stability_error(x_ind, find(abs(x_l1)>DELTA), n);
+    errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_l1);
+    sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1) >= sqrt(eps))/numel(x);
+    q = q+1;
+
+    % L1Noise-Approx of KR
+    %disp('AKRONoi')
+    %tic;
+    %[x_l1kr, x_l1] = akronoi(A, y, epsilon);
+    %timez(q, j) = timez(q, j) + toc;
+    %errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1kr/norm(x_l1kr));
+    %errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x,x_l1kr);
+    %sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1kr) >= sqrt(eps))/numel(x);
+    %q = q+1;
+
+    %errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1/norm(x_l1));
+    %errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_l1);
+    %sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1) >= sqrt(eps))/numel(x);
+
   end
-  
-  errs = errs/n_avg;
-  errs_no_norm = errs_no_norm/n_avg;
-  sparsity = sparsity/n_avg;
-  timez = timez/n_avg;
-  
-  save(['mat/large_',types{t}, 'k', num2str(k), '_noise.mat']);
+ save(['mat/large_',types,'_mp',num2str(mp*100),'_noise.mat']); 
 end
+
+errs = errs/n_avg;
+errs_no_norm = errs_no_norm/n_avg;
+sparsity = sparsity/n_avg;
+timez = timez/n_avg;
+
+save(['mat/large_',types,'_mp',num2str(mp*100),'_noise.mat']); 
 
 delete(gcp('nocreate'));
