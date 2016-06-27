@@ -1,4 +1,4 @@
-function [x_kr, x_l1] = akronoi(A, y, epsilon)
+function [x_kr, x_l1, n_mins] = akronoi(A, y, epsilon)
 %  [x_kr, x_l1] = akronoi(A, y, shift)
 % 
 %  INPUTS 
@@ -52,6 +52,9 @@ combrows = combnk(smallest, s);  % generate combinations of the s+delta indices
 % loop over the possibilites of the s+delta entries that could be tested
 % for being a `zero` entry. 
 sp = zeros(size(combrows, 1), 1);
+err = zeros(size(combrows, 1), 1);
+
+% check if ||Ax-y||<eps is checked. 
 parfor r = 1:size(combrows, 1)
   j = setdiff(1:n, combrows(r, :));
 
@@ -70,12 +73,28 @@ parfor r = 1:size(combrows, 1)
   end
   
   sp(r) = sum(abs(x_kr_final) > sparsity_threshold);  % sparsity 
+  err(r) = norm(x_kr, 1);
 end
 [~, i] = sort(sp);
 
+spmin = min(sp);
+n_mins = sum(spmin==sp);
 
-% solve for the sparest solution again
-j = setdiff(1:n, combrows(i(1), :));
+
+
+
+spmin = min(sp);
+n_mins = sum(spmin==sp);
+if n_mins == 1
+  % solve for the sparest solution again
+  j = setdiff(1:n, combrows(i(1), :));
+else
+  combrows2 = combrows(spmin==sp, :);
+  err2 = err(spmin==sp);
+  [~, jj] = min(err2);
+  j = setdiff(1:n, combrows2(jj(1), :));
+end
+
 xhat = A(:, j)\y;
 x_kr = zeros(n, 1);
 x_kr(j) = xhat;
@@ -89,3 +108,4 @@ for k = 1:n
   end
 end
 x_kr = x_kr_final;
+

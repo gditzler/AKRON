@@ -25,7 +25,6 @@ errs_noise_unit = zeros(7, M);
 errs_clean_2 = zeros(7, M);
 errs_noise_2 = zeros(7, M);
 errs_clean_unit_2 = zeros(7, M);
-errs_noise_unit_2 = zeros(7, M);
 
 
 opts.printEvery = 10000000;
@@ -59,13 +58,15 @@ for i = 1:n_avg
     errs_clean(6, mm) = errs_clean(6, mm) + per_error(x, x_l1);
     errs_clean(7, mm) = errs_clean(7, mm) + per_error(x, x_l1n);
     
-    errs_clean_2(1, mm) = errs_clean_2(1, mm) + per_error(x, x_kron_spar)^2;
-    errs_clean_2(2, mm) = errs_clean_2(2, mm) + per_error(x, x_cosamp)^2;
-    errs_clean_2(3, mm) = errs_clean_2(3, mm) + per_error(x, x_omp)^2;
-    errs_clean_2(4, mm) = errs_clean_2(4, mm) + per_error(x, x_akron)^2;
-    errs_clean_2(5, mm) = errs_clean_2(5, mm) + per_error(x, x_akronnoi)^2;
-    errs_clean_2(6, mm) = errs_clean_2(6, mm) + per_error(x, x_l1)^2;
-    errs_clean_2(7, mm) = errs_clean_2(7, mm) + per_error(x, x_l1n)^2;
+    DELTA = 1e-3;
+    x_ind = find(abs(x) > DELTA);
+    errs_clean_2(1, mm) = errs_clean_2(1, mm) + stability_error(x_ind, find(abs(x_kron_spar) > DELTA));
+    errs_clean_2(2, mm) = errs_clean_2(2, mm) + stability_error(x_ind, find(abs(x_cosamp) > DELTA));
+    errs_clean_2(3, mm) = errs_clean_2(3, mm) + stability_error(x_ind, find(abs(x_omp) > DELTA));
+    errs_clean_2(4, mm) = errs_clean_2(4, mm) + stability_error(x_ind, find(abs(x_akron) > DELTA));
+    errs_clean_2(5, mm) = errs_clean_2(5, mm) + stability_error(x_ind, find(abs(x_akronnoi) > DELTA));
+    errs_clean_2(6, mm) = errs_clean_2(6, mm) + stability_error(x_ind, find(abs(x_l1) > DELTA));
+    errs_clean_2(7, mm) = errs_clean_2(7, mm) + stability_error(x_ind, find(abs(x_l1n) > DELTA));
     
     errs_clean_unit(1, mm) = errs_clean_unit(1, mm) + per_error(x/norm(x), x_kron_spar/norm(x_kron_spar));
     errs_clean_unit(2, mm) = errs_clean_unit(2, mm) + per_error(x/norm(x), x_cosamp/norm(x_cosamp));
@@ -75,13 +76,6 @@ for i = 1:n_avg
     errs_clean_unit(6, mm) = errs_clean_unit(6, mm) + per_error(x/norm(x), x_l1/norm(x_l1));
     errs_clean_unit(7, mm) = errs_clean_unit(7, mm) + per_error(x/norm(x), x_l1n/norm(x_l1n));
     
-    errs_clean_unit_2(1, mm) = errs_clean_unit_2(1, mm) + per_error(x/norm(x), x_kron_spar/norm(x_kron_spar))^2;
-    errs_clean_unit_2(2, mm) = errs_clean_unit_2(2, mm) + per_error(x/norm(x), x_cosamp/norm(x_cosamp))^2;
-    errs_clean_unit_2(3, mm) = errs_clean_unit_2(3, mm) + per_error(x/norm(x), x_omp/norm(x_omp))^2;
-    errs_clean_unit_2(4, mm) = errs_clean_unit_2(4, mm) + per_error(x/norm(x), x_akron/norm(x_akron))^2;
-    errs_clean_unit_2(5, mm) = errs_clean_unit_2(5, mm) + per_error(x/norm(x), x_akronnoi/norm(x_akronnoi))^2;
-    errs_clean_unit_2(6, mm) = errs_clean_unit_2(6, mm) + per_error(x/norm(x), x_l1/norm(x_l1))^2;
-    errs_clean_unit_2(7, mm) = errs_clean_unit_2(7, mm) + per_error(x/norm(x), x_l1n/norm(x_l1n))^2;
 
     % generate noisy data s
     [A, x, y] = cs_model(m, n, k, 'GaussianNoise');
@@ -104,13 +98,15 @@ for i = 1:n_avg
     errs_noise(6, mm) = errs_noise(6, mm) + per_error(x, x_l1);
     errs_noise(7, mm) = errs_noise(7, mm) + per_error(x, x_l1n);
     
-    errs_noise_2(1, mm) = errs_noise_2(1, mm) + per_error(x, x_kron_spar)^2;
-    errs_noise_2(2, mm) = errs_noise_2(2, mm) + per_error(x, x_cosamp)^2;
-    errs_noise_2(3, mm) = errs_noise_2(3, mm) + per_error(x, x_omp)^2;
-    errs_noise_2(4, mm) = errs_noise_2(4, mm) + per_error(x, x_akron)^2;
-    errs_noise_2(5, mm) = errs_noise_2(5, mm) + per_error(x, x_akronnoi)^2;
-    errs_noise_2(6, mm) = errs_noise_2(6, mm) + per_error(x, x_l1)^2;
-    errs_noise_2(7, mm) = errs_noise_2(7, mm) + per_error(x, x_l1n)^2;
+    x_ind = find(abs(x) > DELTA);
+    errs_noise_2(1, mm) = errs_noise_2(1, mm) + stability_error(x_ind, find(abs(x_kron_spar) > DELTA));
+    errs_noise_2(2, mm) = errs_noise_2(2, mm) + stability_error(x_ind, find(abs(x_cosamp) > DELTA));
+    errs_noise_2(3, mm) = errs_noise_2(3, mm) + stability_error(x_ind, find(abs(x_omp) > DELTA));
+    errs_noise_2(4, mm) = errs_noise_2(4, mm) + stability_error(x_ind, find(abs(x_akron) > DELTA));
+    errs_noise_2(5, mm) = errs_noise_2(5, mm) + stability_error(x_ind, find(abs(x_akronnoi) > DELTA));
+    errs_noise_2(6, mm) = errs_noise_2(6, mm) + stability_error(x_ind, find(abs(x_l1) > DELTA));
+    errs_noise_2(7, mm) = errs_noise_2(7, mm) + stability_error(x_ind, find(abs(x_l1n) > DELTA));
+    
     
     errs_noise_unit(1, mm) = errs_noise_unit(1, mm) + per_error(x/norm(x), x_kron_spar/norm(x_kron_spar));
     errs_noise_unit(2, mm) = errs_noise_unit(2, mm) + per_error(x/norm(x), x_cosamp/norm(x_cosamp));
@@ -120,16 +116,9 @@ for i = 1:n_avg
     errs_noise_unit(6, mm) = errs_noise_unit(6, mm) + per_error(x/norm(x), x_l1/norm(x_l1));
     errs_noise_unit(7, mm) = errs_noise_unit(7, mm) + per_error(x/norm(x), x_l1n/norm(x_l1n));
     
-    errs_noise_unit_2(1, mm) = errs_noise_unit_2(1, mm) + per_error(x/norm(x), x_kron_spar/norm(x_kron_spar))^2;
-    errs_noise_unit_2(2, mm) = errs_noise_unit_2(2, mm) + per_error(x/norm(x), x_cosamp/norm(x_cosamp))^2;
-    errs_noise_unit_2(3, mm) = errs_noise_unit_2(3, mm) + per_error(x/norm(x), x_omp/norm(x_omp))^2;
-    errs_noise_unit_2(4, mm) = errs_noise_unit_2(4, mm) + per_error(x/norm(x), x_akron/norm(x_akron))^2;
-    errs_noise_unit_2(5, mm) = errs_noise_unit_2(5, mm) + per_error(x/norm(x), x_akronnoi/norm(x_akronnoi))^2;
-    errs_noise_unit_2(6, mm) = errs_noise_unit_2(6, mm) + per_error(x/norm(x), x_l1/norm(x_l1))^2;
-    errs_noise_unit_2(7, mm) = errs_noise_unit_2(7, mm) + per_error(x/norm(x), x_l1n/norm(x_l1n))^2;
-
     mm = mm+1;
   end
+  save('mat/noise_experiments.mat');
 end
 
 % save('mat/noise_experiments.mat');

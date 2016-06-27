@@ -1,4 +1,3 @@
-
 clc;
 clear;
 close all;
@@ -9,7 +8,7 @@ addpath('akron/');
 addpath('other/');
 
 
-n_avg = 250;
+n_avg = 50;
 n_set = [25:25:250];
 k_set = floor(.05*n_set);
 M = 20;
@@ -21,15 +20,13 @@ errFcn = [];
 epsilon = 0.05;
 
 delete(gcp('nocreate'));
-parpool(50);
+parpool(15);
 
 for t = 1:length(types)
   errs = zeros(7, length(n_set));
   errs_no_norm = zeros(7, length(n_set));
   timez = zeros(7, length(n_set));
   sparsity = zeros(7, length(n_set));
-
-  
 
   for i = 1:n_avg
     disp(['Running trial ',num2str(i), ' of ', num2str(n_avg)]);
