@@ -5,7 +5,7 @@ close all
 addpath akron/
 addpath other/
 
-n_cv = 10;
+n_cv = 5;
 k_alg = 15;
 
 [A, x, y] = cs_model(200, 250, 8, 'Gaussian');
@@ -48,6 +48,7 @@ y(y==0) = -1;
 errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
 
 %%
+% CoSaMP, OMP, AKRON, 
 errors(isnan(errors)) = 100;
 [hZtest, pZtest, pFtest] = friedman_demsar(errors, 'two', .1)
 ranks = rank_rows(errors);
