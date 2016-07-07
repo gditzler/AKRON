@@ -98,6 +98,7 @@ end
 
 errs = errs/n_avg;
 errs_no_norm = errs_no_norm/n_avg;
+stabilities = stabilities/n_avg;
 sparsity = sparsity/n_avg;
 timez = timez/n_avg;
 

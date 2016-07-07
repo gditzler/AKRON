@@ -53,6 +53,14 @@ end
 
 spmin = min(sp);
 n_mins = sum(spmin==sp);
+
+if spmin == 0
+  sp2 = sp;
+  sp2(sp2==spmin) = max(sp);
+  spmin = min(sp2);
+  n_mins = sum(spmin==sp2);
+end
+
 if n_mins == 1
   % solve for the sparest solution again
   j = setdiff(1:n, combrows(i(1), :));
