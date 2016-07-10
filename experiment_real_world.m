@@ -16,7 +16,7 @@ data = load('~/Git/ClassificationDatasets/csv/spectf_train_test.csv');
 A = data(:, 1:end-1);
 y = data(:, end);
 y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
+errors(end+1, :) =   run_cv(A, y, n_cv, k_alg, classification);
 
 %% molec-biol-promoter_test
 data = load('~/Git/ClassificationDatasets/csv/molec-biol-promoter_test.csv'); 

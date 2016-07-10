@@ -7,7 +7,7 @@ rng(1);
 inds = cvpartition(n, 'Kfold', n_cv);
 opts.printEvery = 10000000;
 
-errors = zeros(n_cv, 4);
+errors = zeros(n_cv, 6);
 
 
 if classification == 1
