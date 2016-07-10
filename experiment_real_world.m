@@ -17,7 +17,7 @@ data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/spectf_train_test.c
 A = data(:, 1:end-1);
 y = data(:, end);
 y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
+errors(end+1, :) =   run_cv(A, y, n_cv, k_alg, classification);
 
 %% molec-biol-promoter_test
 %disp('molec')
