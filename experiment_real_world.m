@@ -12,6 +12,7 @@ k_alg = 15;
 errors =[];
 classification = 1;
 %% spectf_train_test
+disp('spect')
 data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/spectf_train_test.csv'); 
 A = data(:, 1:end-1);
 y = data(:, end);
@@ -19,27 +20,31 @@ y(y==0) = -1;
 errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
 
 %% molec-biol-promoter_test
-data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/molec-biol-promoter_test.csv'); 
-k_alg = 5;
-A = data(:, 1:end-1);
-y = data(:, end);
-y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
+%disp('molec')
+%data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/molec-biol-promoter_test.csv'); 
+%k_alg = 5;
+%A = data(:, 1:end-1);
+%y = data(:, end);
+%y(y==0) = -1;
+%errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
 %% conn-bench-sonar-mines-rocks_test
-data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/conn-bench-sonar-mines-rocks_test.csv'); 
-k_alg = 5;
-A = data(:, 1:end-1);
-y = data(:, end);
-y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
+%disp('conm')
+%data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/conn-bench-sonar-mines-rocks_test.csv'); 
+%k_alg = 5;
+%A = data(:, 1:end-1);
+%y = data(:, end);
+%y(y==0) = -1;
+%errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
 %% breast-cancer-wisc-prog_test
-data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/breast-cancer-wisc-prog_test.csv'); 
-k_alg = 5;
-A = data(:, 1:end-1);
-y = data(:, end);
-y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
+%disp('breast')
+%data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/breast-cancer-wisc-prog_test.csv'); 
+%k_alg = 5;
+%A = data(:, 1:end-1);
+%y = data(:, end);
+%y(y==0) = -1;
+%errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
 %% echocardiogram_test
+disp('echo')
 data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/echocardiogram_test.csv'); 
 k_alg = 5;
 A = data(:, 1:end-1);
