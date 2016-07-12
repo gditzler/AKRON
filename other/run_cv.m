@@ -26,23 +26,23 @@ for k = 1:n_cv
   % run akron 
   [x_akron, x_l1] = akron(A(itr, :), y(itr));
   % run akronoi 
-  [x_akronn, x_l1n] = akronoi(A(itr, :), y(itr), .05);
+  %[x_akronn, x_l1n] = akronoi(A(itr, :), y(itr), .05);
   
   % compute the output of each linear model 
   y_cosamp = A(ite, :)*x_cosamp;
   y_omp = A(ite, :)*x_omp;
   y_akron = A(ite, :)*x_akron;
   y_l1 = A(ite, :)*x_l1;
-  y_l1n = A(ite, :)*x_l1n;
-  y_akronn = A(ite, :)*x_akronn;
+  %y_l1n = A(ite, :)*x_l1n;
+  %y_akronn = A(ite, :)*x_akronn;
   
   % measure the error rates 
   errors(k, 1) = calc_error(y_cosamp, y(ite));
   errors(k, 2) = calc_error(y_omp, y(ite));
   errors(k, 3) = calc_error(y_akron, y(ite));
   errors(k, 4) = calc_error(y_l1, y(ite));
-  errors(k, 5) = calc_error(y_akronn, y(ite));
-  errors(k, 6) = calc_error(y_l1n, y(ite));
+  %errors(k, 5) = calc_error(y_akronn, y(ite));
+  %errors(k, 6) = calc_error(y_l1n, y(ite));
   
 end
 

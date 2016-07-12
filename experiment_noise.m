@@ -14,7 +14,7 @@ M = n-3;
 k_alg = 9;
 epsilon = 0.05;
 delete(gcp('nocreate'));
-parpool(15);
+parpool(50);
 
 
 errs_clean = zeros(7, M);
