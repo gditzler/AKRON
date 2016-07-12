@@ -6,55 +6,35 @@ addpath akron/
 addpath other/
 
 n_cv = 5;
-k_alg = 15;
-
-[A, x, y] = cs_model(200, 250, 8, 'Gaussian');
-errors =[];
+k_alg = 7;
+base_path = '/scratch/ditzler/Git/ClassificationDatasets/csv/';
+dsets = {'echocardiogram_test.csv'
+  'breast-cancer-wisc-prog_test.csv'
+  'conn-bench-sonar-mines-rocks_test.csv'
+  'spectf_train_test.csv'
+  'csv/trains.csv'
+  'musk-1_test.csv'};
+errors = zeros(length(dsets), 6);
 classification = 1;
-%% spectf_train_test
-disp('spect')
-data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/spectf_train_test.csv'); 
-A = data(:, 1:end-1);
-y = data(:, end);
-y(y==0) = -1;
-errors(end+1, :) =   run_cv(A, y, n_cv, k_alg, classification);
 
-%% molec-biol-promoter_test
-disp('molec')
-data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/molec-biol-promoter_test.csv'); 
-k_alg = 5;
-A = data(:, 1:end-1);
-y = data(:, end);
-y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
-%% conn-bench-sonar-mines-rocks_test
-disp('conm')
-data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/conn-bench-sonar-mines-rocks_test.csv'); 
-k_alg = 5;
-A = data(:, 1:end-1);
-y = data(:, end);
-y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
-%breast-cancer-wisc-prog_test
-disp('breast')
-data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/breast-cancer-wisc-prog_test.csv'); 
-k_alg = 5;
-A = data(:, 1:end-1);
-y = data(:, end);
-y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
-%% echocardiogram_test
-disp('echo')
-data = load('/scratch/ditzler/Git/ClassificationDatasets/csv/echocardiogram_test.csv'); 
-k_alg = 5;
-A = data(:, 1:end-1);
-y = data(:, end);
-y(y==0) = -1;
-errors(end+1, :) = run_cv(A, y, n_cv, k_alg, classification);
+delete(gcp('nocreate'));
+parpool(25);
+for n = 1:length(dsets)
+  try 
+    data = load([base_path, dsets{n}]); 
+    A = data(:, 1:end-1);
+    y = data(:, end);
+    y(y==0) = -1;
+    errors(n, :) = run_cv(A, y, n_cv, k_alg, classification);
+  catch 
+    disp(['Error on ', dsets{n}]);
+  end
+end
 
-%%
-% CoSaMP, OMP, AKRON, 
-errors(isnan(errors)) = 100;
-[hZtest, pZtest, pFtest] = friedman_demsar(errors, 'two', .1)
+delete(gcp);
+
+errors(isnan(errors)) = 1;
+errors = errors(:, 1:4);
+[hZtest, pZtest, pFtest] = friedman_demsar(errors, 'left', .1);
 ranks = rank_rows(errors);
 save('mat/real_world.mat');
