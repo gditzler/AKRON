@@ -1,0 +1,7 @@
+#folders
+eps/
+pdf/
+
+#temps
+*.m~
+*.swp
