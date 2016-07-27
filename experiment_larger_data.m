@@ -18,6 +18,7 @@ addpath('other/');
 n_avg = 100;              % number of averages to run
 n_set = 50:25:250;        % "p" in the paper: # of variables 
 k_set = floor(.05*n_set); % sparest solution 
+% .1 .2 .3 .4
 mp = .1;                  % percentage of "p" to determine "m"
 k_alg_set = floor(.1*n_set);  % percentage of "p" to determine "k" for OMP/CoSaMP
 types = 'Gaussian';       % genenate Gaussian data 
