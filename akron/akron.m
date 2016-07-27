@@ -1,4 +1,4 @@
-function [x_kr, x_l1, n_mins] = akron(A, y, shift)
+function [x_kr, x_l1, n_mins, tmz] = akron(A, y, shift)
 %  [x_kr, x_l1] = l1_approximate_reconstruction(A, y)
 % 
 %  INPUTS 
@@ -12,14 +12,17 @@ function [x_kr, x_l1, n_mins] = akron(A, y, shift)
 %
 %  LICENSE
 %    MIT
+tmz = 0;
 sparsity_threshold = 1e-3;
 if nargin == 2 
   shift = 3;
 end
+
 X = null(A);
 s = size(X, 2); % "s=dim(ker(A))"
 n = size(A, 2);
 
+tic;
 % minimize the l1-norm
 cvx_begin quiet
   variable x(n,1)
@@ -27,6 +30,7 @@ cvx_begin quiet
   subject to
     A*x == y; 
 cvx_end
+tmz = tmz + toc;
 
 % save the solution to the l1 problem before approximating the kernel
 % reconstruction. 
@@ -41,6 +45,8 @@ combrows = combnk(smallest, s);  % generate combinations of the s+delta indices
 % for being a `zero` entry. 
 sp = zeros(size(combrows, 1), 1);
 err = zeros(size(combrows, 1), 1);
+
+tic;
 parfor r = 1:size(combrows, 1)
   j = setdiff(1:n, combrows(r, :));
   xhat = A(:, j)\y;
@@ -73,3 +79,4 @@ end
 xhat = A(:, j)\y;
 x_kr = zeros(n,1);
 x_kr(j) = xhat;
+tmz = tmz + toc;
