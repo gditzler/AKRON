@@ -26,7 +26,7 @@ for k = 1:n_cv
   % run akron 
   [x_akron, x_l1] = akron(A(itr, :), y(itr));
   % run akronoi 
-  %[x_akronn, x_l1n] = akronoi(A(itr, :), y(itr), .05);
+  %[x_akronn, x_l1n] = akronoi(A(itr, :), y(itr), 1e-4);
   
   % compute the output of each linear model 
   y_cosamp = A(ite, :)*x_cosamp;
