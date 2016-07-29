@@ -2,7 +2,7 @@ clc
 clear
 close all
 
-load ~/Downloads/l1magic/Data/camera.mat
+load other/camera.mat
 
 I = camera(81:112,37:68);
 n = 32;
@@ -29,5 +29,7 @@ b = A*x;
 % initial point
 x0 = A'*b;
 
+parpool(20);
 errors = run_cv(A, b, 5, 50, 0);
-
+delete(gcp)
+save('mat/exper_camera.mat')

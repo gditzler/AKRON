@@ -16,6 +16,7 @@ else
   calc_error = @(x,y) mean((x-y).^2);
 end
 for k = 1:n_cv
+  disp(['Running ', num2str(k), ' of ', num2str(n_cv)]);
   itr = inds.training(k);
   ite = inds.test(k);
   
@@ -24,7 +25,7 @@ for k = 1:n_cv
   % run omp
   x_omp = omp(A(itr, :), y(itr), k_alg, [], opts);
   % run akron 
-  [x_akron, x_l1] = akron(A(itr, :), y(itr));
+  [x_akron, x_l1] = akron(A(itr, :), y(itr), 4);
   % run akronoi 
   %[x_akronn, x_l1n] = akronoi(A(itr, :), y(itr), .05);
   

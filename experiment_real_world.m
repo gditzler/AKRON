@@ -9,10 +9,10 @@ n_cv = 5;
 k_alg = 7;
 base_path = '/scratch/ditzler/Git/ClassificationDatasets/csv/';
 dsets = {'breast-cancer-wisc-prog_test.csv'
-  'conn-bench-sonar-mines-rocks_test.csv'
-  'spectf_train_test.csv'
-  'trains.csv'
-  'musk-1_test.csv'};
+         'conn-bench-sonar-mines-rocks_test.csv'
+         'spectf_train_test.csv'
+         'trains.csv'
+         'musk-1_test.csv'};
 errors = zeros(length(dsets), 6);
 classification = 1;
 

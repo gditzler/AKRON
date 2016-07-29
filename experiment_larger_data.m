@@ -28,7 +28,7 @@ DELTA = 1e-3;
 
 % start the parallel pool - you'll need a large cluster for this
 delete(gcp('nocreate'));
-parpool(50);
+parpool(90);
 
 errs = zeros(4, length(n_set));
 stabilities = zeros(4, length(n_set));
