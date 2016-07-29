@@ -19,7 +19,8 @@ if nargin == 2
 end
 
 X = null(A);
-s = size(X, 2); % "s=dim(ker(A))"
+% s = size(X, 2); % "s=dim(ker(A))"
+s = size(A, 2)-size(A,1);
 n = size(A, 2);
 
 tic;
