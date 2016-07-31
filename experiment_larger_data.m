@@ -10,6 +10,11 @@ clc;
 clear;
 close all;
 
+% start the parallel pool - you'll need a large cluster for this
+delete(gcp('nocreate'));
+parpool(90);
+
+
 set(0,'RecursionLimit', 10000);
 
 addpath('akron/');
@@ -18,17 +23,15 @@ addpath('other/');
 n_avg = 100;              % number of averages to run
 n_set = 50:25:250;        % "p" in the paper: # of variables 
 k_set = floor(.05*n_set); % sparest solution 
+
+for mp = [.1 .2 .3 .4]
 % .1 .2 .3 .4
-mp = .1;                  % percentage of "p" to determine "m"
+%mp = .1;                  % percentage of "p" to determine "m"
 k_alg_set = floor(.1*n_set);  % percentage of "p" to determine "k" for OMP/CoSaMP
 types = 'Gaussian';       % genenate Gaussian data 
 opts.printEvery = 10000000;
 errFcn = [];              % OMP/CoSaMP error function 
 DELTA = 1e-3;
-
-% start the parallel pool - you'll need a large cluster for this
-delete(gcp('nocreate'));
-parpool(90);
 
 errs = zeros(4, length(n_set));
 stabilities = zeros(4, length(n_set));
@@ -105,5 +108,6 @@ sparsity = sparsity/n_avg;
 timez = timez/n_avg;
 
 save(['mat/large_',types,'_mp',num2str(mp*100),'_noise.mat']); 
+end 
 
 delete(gcp('nocreate'));

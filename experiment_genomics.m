@@ -11,4 +11,13 @@ A = A(2:end, :);
 y = load('other/genomics/y.tsv');
 shift = 2;
 
+delete(gcp('nocreate'));
+parpool(30);
+
 [x_akron, x_l1, ~, tmz] = akron(A, y, shift);
+delete(gcp);
+
+save('mat/genomics.mat');
+
+
+
