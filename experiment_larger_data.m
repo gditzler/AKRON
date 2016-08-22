@@ -81,7 +81,7 @@ for i = 1:n_avg
     % AKRON and L1
     disp('AKRON')
     %tic;
-    [x_l1kr, x_l1, ~, tmp] = akron(A, y);
+    [x_l1kr, x_l1, ~, tmp, tmp2] = akron(A, y);
     timez(q, j) = timez(q, j) + tmp;
     %timez(q, j) = timez(q, j) + toc;
     errs(q, j) = errs(q, j) + per_error(x/norm(x), x_l1kr/norm(x_l1kr));
@@ -94,6 +94,7 @@ for i = 1:n_avg
     stabilities(q, j) = stabilities(q, j) + stability_error(x_ind, find(abs(x_l1)>DELTA), n);
     errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_l1);
     sparsity(q, j) = sparsity(q, j) + sum(abs(x_l1) >= DELTA)/numel(x);
+    timez(q, j) = timez(q, j) + tmp2;
     q = q+1;
 
   end
