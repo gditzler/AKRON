@@ -11,22 +11,25 @@ n_avg = 200;
 n = 250;
 k = floor(.05*n);
 % M = n-3;
-M = floor([.05 .1 .15 .2 .25 .3 .35]*n);
-k_alg = M+5;
+Ms = floor([.05 .1 .15 .2 .25 .3 .35]*n);
+M = length(Ms);
+k_alg = Ms+5;
 % k_alg = 9;
 epsilon = 0.05;
 delete(gcp('nocreate'));
-parpool(90);
+parpool(4);
 
 
 errs_clean = zeros(7, M);
 errs_noise = zeros(7, M);
 errs_clean_unit = zeros(7, M);
 errs_noise_unit = zeros(7, M);
+timez_A = zeros(7, M);
 
 errs_clean_2 = zeros(7, M);
 errs_noise_2 = zeros(7, M);
 errs_clean_unit_2 = zeros(7, M);
+timez_B = zeros(7, M);
 
 
 opts.printEvery = 10000000;
@@ -36,21 +39,33 @@ for i = 1:n_avg
   disp(['Running trial ',num2str(i), ' of ', num2str(n_avg)]);
 
   mm = 1;
-  for m = M
+  for m = Ms
     
     % generate data from the Gaussian CS model 
     [A, x, y] = cs_model(m, n, k, 'Gaussian');
     
     % run kernel reconstruction (kron)
-    [~, ~, x_kron_spar] = kron_cs(A, x, y);
+    [~, ~, x_kron_spar, ~, ~, ~, tmz] = kron_cs(A, x, y);
+    timez_A(1, mm) = timez_A(1, mm) + tmz;
+    
     % run cosamp
+    tic; 
     x_cosamp = cosamp(A, y, k_alg, errFcn, opts);
+    timez_A(2, mm) = timez_A(2, mm) + toc;
+    
     % run omp
+    tic; 
     x_omp = omp(A, y, k_alg, errFcn, opts);
+    timez_A(3, mm) = timez_A(3, mm) + toc;
+    
     % run akron 
-    [x_akron, x_l1] = akron(A, y);
+    [x_akron, x_l1, ~, tmz, tmzl1] = akron(A, y);
+    timez_A(4, mm) = timez_A(1, mm) + tmz;
+    timez_A(5, mm) = timez_A(1, mm) + tmzl1;
+    
     % run akron-noisy
-    [x_akronnoi, x_l1n] = akronoi(A, y, epsilon);
+    timez_A(6, mm) = timez_A(1, mm) + tmz;
+    [x_akronnoi, x_l1n, ~, tmz] = akronoi(A, y, epsilon);
 
     errs_clean(1, mm) = errs_clean(1, mm) + per_error(x, x_kron_spar);
     errs_clean(2, mm) = errs_clean(2, mm) + per_error(x, x_cosamp);
@@ -81,16 +96,30 @@ for i = 1:n_avg
 
     % generate noisy data s
     [A, x, y] = cs_model(m, n, k, 'GaussianNoise');
+    
+    
     % run kernel reconstruction (kron)
-    [~, ~, x_kron_spar] = kron_cs(A, x, y);
+    [~, ~, x_kron_spar, ~, ~, ~, tmz] = kron_cs(A, x, y);
+    timez_B(1, mm) = timez_B(1, mm) + tmz;
+    
     % run cosamp
+    tic; 
     x_cosamp = cosamp(A, y, k_alg, errFcn, opts);
+    timez_B(2, mm) = timez_B(2, mm) + toc;
+    
     % run omp
+    tic; 
     x_omp = omp(A, y, k_alg, errFcn, opts);
+    timez_B(3, mm) = timez_B(3, mm) + toc;
+    
     % run akron 
-    [x_akron, x_l1] = akron(A, y);
+    [x_akron, x_l1, ~, tmz, tmzl1] = akron(A, y);
+    timez_B(4, mm) = timez_B(1, mm) + tmz;
+    timez_B(5, mm) = timez_B(1, mm) + tmzl1;
+    
     % run akron-noisy
-    [x_akronnoi, x_l1n] = akronoi(A, y, epsilon);
+    timez_B(6, mm) = timez_B(1, mm) + tmz;
+    [x_akronnoi, x_l1n, ~, tmz] = akronoi(A, y, epsilon);
 
     errs_noise(1, mm) = errs_noise(1, mm) + per_error(x, x_kron_spar);
     errs_noise(2, mm) = errs_noise(2, mm) + per_error(x, x_cosamp);
@@ -133,9 +162,11 @@ errs_clean_2 = errs_clean_2/n_avg;
 errs_noise_2 = errs_noise_2/n_avg;
 errs_clean_unit_2 = errs_clean_unit_2/n_avg;
 
+timez_A = timez_A/n_avg;
+timez_B = timez_B/n_avg;
 % var_errs_clean_2 = errs_clean_2 - errs_clean.^2;
 % var_errs_noise_2 = errs_noise_2 - errs_noise.^2';
 % var_errs_clean_unit_2 = errs_clean_unit_2 - errs_clean_unit.^2';
 % var_errs_noise_unit_2 = errs_noise_unit_2 - errs_noise_unit.^2';
-save('mat/noise_experiments.mat');
+save('mat/noise_experiments_2.mat');
 
