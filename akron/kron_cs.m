@@ -1,4 +1,4 @@
-function [min_err, x_min_error, x_sparsest, min_zeros, Xsol, n_mins] = kron_cs(A, x, y)
+function [min_err, x_min_error, x_sparsest, min_zeros, Xsol, n_mins, tmz] = kron_cs(A, x, y)
 %  [min_err, x_min_error, x_sparsest, min_zeros, Xsol] = kr(A, x, y)
 % 
 %  INPUTS 
@@ -15,10 +15,12 @@ function [min_err, x_min_error, x_sparsest, min_zeros, Xsol, n_mins] = kron_cs(A
 %
 %  LICENSE
 %    MIT
+tmz = 0;
 X = null(A);
 [~, n] = size(A);
 s = size(X,2); % "s=dim(ker(A))"
 
+tic;
 % Compute the projection matrix in the range of "A". pinv is used here 
 % because MATLAB may generate randomly A where A'*A is a singular matrix 
 % Similarly we use pinv to compute Prant
@@ -29,10 +31,13 @@ Prant = A'*pinv(A*A')*A;
 
 % "x0" is the particular solution in the range of "A"
 xo = pinv(Pran*A*Prant)*y;
+tmz = tmz + toc;
 
 % generate the all possible "n" choose "s" combinations where 
 % "dim(combrows,1)=n choose s" and "dim(combrows,2)=s"
 combrows = combnk(1:n,s); 
+
+tic;
 %Ps = zeros(size(combrows,1), n, n);
 Xsol = zeros(numel(x), size(combrows,1));
 percent_error = zeros(size(combrows,1), 1);
@@ -63,4 +68,5 @@ x_sparsest = Xsol(:,idx);
 
 spmin = min(sparsity);
 n_mins = sum(spmin==sparsity);
+tmz = tmz + toc;
 

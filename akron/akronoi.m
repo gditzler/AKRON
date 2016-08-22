@@ -1,4 +1,4 @@
-function [x_kr, x_l1, n_mins] = akronoi(A, y, epsilon)
+function [x_kr, x_l1, n_mins, tmz] = akronoi(A, y, epsilon)
 %  [x_kr, x_l1] = akronoi(A, y, shift)
 % 
 %  INPUTS 
@@ -12,10 +12,14 @@ function [x_kr, x_l1, n_mins] = akronoi(A, y, epsilon)
 %
 %  LICENSE
 %    MIT
+tmz = 0;
+
 sparsity_threshold = 1e-3;
 X = null(A);
 s = size(X, 2); % "s=dim(ker(A))"
 n = size(A, 2);
+
+tic;
 
 % minimize the l1-norm
 cvx_begin quiet
@@ -47,6 +51,10 @@ x_tmp2(largest) = x_tmp;
 sup_set = find(abs(x_tmp2) <= epsilon);
 smallest = union(smallest, sup_set);
 
+
+tmz = tmz + toc;
+
+
 combrows = combnk(smallest, s);  % generate combinations of the s+delta indices
 
 % loop over the possibilites of the s+delta entries that could be tested
@@ -54,6 +62,7 @@ combrows = combnk(smallest, s);  % generate combinations of the s+delta indices
 sp = zeros(size(combrows, 1), 1);
 err = zeros(size(combrows, 1), 1);
 
+tic;
 % check if ||Ax-y||<eps is checked. 
 parfor r = 1:size(combrows, 1)
   j = setdiff(1:n, combrows(r, :));
@@ -108,4 +117,5 @@ for k = 1:n
   end
 end
 x_kr = x_kr_final;
+tmz = tmz + toc;
 
