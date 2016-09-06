@@ -7,7 +7,7 @@ rng(1);
 addpath('akron/');
 addpath('other/');
 
-n_avg = 200;
+n_avg = 100;
 n = 250;
 k = floor(.05*n);
 % M = n-3;
@@ -17,7 +17,7 @@ k_alg = 15;
 % k_alg = 9;
 epsilon = 0.05;
 delete(gcp('nocreate'));
-parpool(85);
+parpool(4);
 
 
 errs_clean = zeros(7, M);
@@ -49,7 +49,7 @@ for i = 1:n_avg
     %timez_A(1, mm) = timez_A(1, mm) + tmz;
     
     % run cosamp
-    disp('Running CoSaMP')
+    disp('  Running CoSaMP')
     tic; 
     x_cosamp = cosamp(A, y, k_alg, errFcn, opts);
     timez_A(2, mm) = timez_A(2, mm) + toc;
@@ -60,9 +60,9 @@ for i = 1:n_avg
     timez_A(3, mm) = timez_A(3, mm) + toc;
     
     % run akron 
-    [x_akron, x_l1, ~, tmz, tmzl1] = akron(A, y);
-    timez_A(4, mm) = timez_A(1, mm) + tmz;
-    timez_A(5, mm) = timez_A(1, mm) + tmzl1;
+    %[x_akron, x_l1, ~, tmz, tmzl1] = akron(A, y);
+    %timez_A(4, mm) = timez_A(1, mm) + tmz;
+    %timez_A(5, mm) = timez_A(1, mm) + tmzl1;
     
     % run akron-noisy
 %     timez_A(6, mm) = timez_A(1, mm) + tmz;
@@ -150,7 +150,7 @@ for i = 1:n_avg
     
     mm = mm+1;
   end
-%   save('mat/timerz.mat');
+  save('mat/timerz.mat');
 end
 
 % save('mat/noise_experiments.mat');
