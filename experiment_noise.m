@@ -7,8 +7,8 @@ rng(1);
 addpath('akron/');
 addpath('other/');
 
-n_avg = 200;
-n = 250;
+n_avg = 100;
+n = 200;
 k = floor(.05*n);
 % M = n-3;
 Ms = floor([.05 .1 .15 .2 .25 .3 .35]*n);
