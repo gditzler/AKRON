@@ -17,7 +17,7 @@ k_alg = 15;
 % k_alg = 9;
 epsilon = 0.05;
 delete(gcp('nocreate'));
-parpool(85);
+parpool(90);
 
 
 errs_clean = zeros(7, M);
@@ -150,7 +150,7 @@ for i = 1:n_avg
     
     mm = mm+1;
   end
-%   save('mat/timerz.mat');
+  save('mat/timerz.mat');
 end
 
 % save('mat/noise_experiments.mat');
