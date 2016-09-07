@@ -8,7 +8,11 @@ addpath('akron/');
 addpath('other/');
 
 n_avg = 100;
+<<<<<<< HEAD
 n = 250;
+=======
+n = 200;
+>>>>>>> 9c2ad97f0aa4385aa4cf4e680ac159a8e70eb2da
 k = floor(.05*n);
 % M = n-3;
 Ms = floor([.05 .1 .15 .2 .25 .3 .35]*n);
@@ -17,7 +21,11 @@ k_alg = 15;
 % k_alg = 9;
 epsilon = 0.05;
 delete(gcp('nocreate'));
+<<<<<<< HEAD
 parpool(4);
+=======
+parpool(90);
+>>>>>>> 9c2ad97f0aa4385aa4cf4e680ac159a8e70eb2da
 
 
 errs_clean = zeros(7, M);
