@@ -11,7 +11,7 @@ n_avg = 100;
 n = 200;
 k = floor(.05*n);
 % M = n-3;
-Ms = floor([.05 .1 .15 .2 .25 .3 .35]*n);
+Ms = floor([.05 .1 .15 .2 .25 .3 .35 .4 .45 .5 .6 .65 .7]*n);
 M = length(Ms);
 k_alg = 15;
 % k_alg = 9;
@@ -61,8 +61,8 @@ for i = 1:n_avg
     
     % run akron 
     [x_akron, x_l1, ~, tmz, tmzl1] = akron(A, y);
-    timez_A(4, mm) = timez_A(1, mm) + tmz;
-    timez_A(5, mm) = timez_A(1, mm) + tmzl1;
+    timez_A(4, mm) = timez_A(4, mm) + tmz;
+    timez_A(5, mm) = timez_A(5, mm) + tmzl1;
     
     % run akron-noisy
 %     timez_A(6, mm) = timez_A(1, mm) + tmz;
