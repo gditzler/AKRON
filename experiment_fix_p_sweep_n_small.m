@@ -8,16 +8,16 @@ addpath('akron/');
 addpath('other/');
 addpath('sl0/');
 
-n_avg = 200;
+n_avg = 250;
 p = 20;
-k = 8;
-Ps = 7:19; 
+k = 8;      %floor(.05*n);
+Ps = 7:19; %floor([.05 .1 .15 .2 .25 .3 .35]*n);
 P = length(Ps);
 k_alg = 15;
 epsilon = 0.05;
 
 delete(gcp('nocreate'));
-parpool(40);
+parpool(90);
 
 alg = 8;
 errs_clean = zeros(alg, P);
@@ -161,5 +161,5 @@ timez_B = timez_B/n_avg;
 % var_errs_noise_2 = errs_noise_2 - errs_noise.^2';
 % var_errs_clean_unit_2 = errs_clean_unit_2 - errs_clean_unit.^2';
 % var_errs_noise_unit_2 = errs_noise_unit_2 - errs_noise_unit.^2';
-save(['mat/noise_experiments_', date, '.mat']);
+save(['mat/experiments_fixP_sweepN_small_', date, '.mat']);
 

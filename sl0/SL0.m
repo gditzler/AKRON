@@ -1,4 +1,4 @@
-function s=SL0(A, x, sigma_min, sigma_decrease_factor, mu_0, L, A_pinv, true_s)
+function [s, tt]=SL0(A, x, sigma_min, sigma_decrease_factor, mu_0, L, A_pinv, true_s)
 %
 % SL0(A, x, sigma_min, sigma_decrease_factor, mu_0, L, A_pinv, true_s)
 %
@@ -109,6 +109,7 @@ else
     error('Error in calling SL0 function');
 end
 
+tic;
 
 % Initialization
 %s = A\x;
@@ -129,6 +130,7 @@ while sigma>sigma_min
     
     sigma = sigma * sigma_decrease_factor;
 end
+tt = toc;
     
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
