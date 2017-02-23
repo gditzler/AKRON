@@ -5,3 +5,6 @@ pdf/
 #temps
 *.m~
 *.swp
+old/
+other/gltest.csv
+other/gltrain.csv
