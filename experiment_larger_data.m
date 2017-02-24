@@ -110,7 +110,7 @@ for mp = [.1 .2 .3 .4]
 
     end
     % save data on each average just to be safe 
-   save(['mat/large_',types,'_mp',num2str(mp*100),'_noise.mat']); 
+   save(['mat/experiment_large_',types,'_mp',num2str(mp*100),'_noise_', date,'.mat']); 
   end
 
   errs = errs/n_avg;
@@ -119,7 +119,9 @@ for mp = [.1 .2 .3 .4]
   sparsity = sparsity/n_avg;
   timez = timez/n_avg;
 
-  save(['mat/large_',types,'_mp',num2str(mp*100),'_noise.mat']); 
+  save(['mat/experiment_large_',types,'_mp',num2str(mp*100),'_noise_', date,'.mat']); 
 end 
 
 delete(gcp('nocreate'));
+
+
