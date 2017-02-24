@@ -12,7 +12,7 @@ close all;
 
 % start the parallel pool - you'll need a large cluster for this
 delete(gcp('nocreate'));
-parpool(90);
+parpool(40);
 
 
 set(0,'RecursionLimit', 10000);
