@@ -13,7 +13,7 @@ p = 20;
 k = 8;      %floor(.05*n);
 Ps = 7:19; %floor([.05 .1 .15 .2 .25 .3 .35]*n);
 P = length(Ps);
-k_alg = 15;
+k_alg = 8;
 epsilon = 0.05;
 
 delete(gcp('nocreate'));
