@@ -19,6 +19,7 @@ set(0,'RecursionLimit', 10000);
 
 addpath('akron/');
 addpath('other/');
+addpath('sl0/');
 
 n_avg = 100;              % number of averages to run
 n_set = 50:25:250;        % "p" in the paper: # of variables 
