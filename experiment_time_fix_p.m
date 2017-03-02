@@ -6,6 +6,7 @@ rng(1);
 
 addpath('akron/');
 addpath('other/');
+addpath('sl0/')
 
 n_avg = 100;
 n = 200;
