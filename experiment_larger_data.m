@@ -12,13 +12,14 @@ close all;
 
 % start the parallel pool - you'll need a large cluster for this
 delete(gcp('nocreate'));
-parpool(90);
+parpool(40);
 
 
 set(0,'RecursionLimit', 10000);
 
 addpath('akron/');
 addpath('other/');
+addpath('sl0/');
 
 n_avg = 100;              % number of averages to run
 n_set = 50:25:250;        % "p" in the paper: # of variables 
@@ -110,7 +111,7 @@ for mp = [.1 .2 .3 .4]
 
     end
     % save data on each average just to be safe 
-   save(['mat/large_',types,'_mp',num2str(mp*100),'_noise.mat']); 
+   save(['mat/experiment_large_',types,'_mp',num2str(mp*100),'_noise_', date,'.mat']); 
   end
 
   errs = errs/n_avg;
@@ -119,7 +120,9 @@ for mp = [.1 .2 .3 .4]
   sparsity = sparsity/n_avg;
   timez = timez/n_avg;
 
-  save(['mat/large_',types,'_mp',num2str(mp*100),'_noise.mat']); 
+  save(['mat/experiment_large_',types,'_mp',num2str(mp*100),'_noise_', date,'.mat']); 
 end 
 
 delete(gcp('nocreate'));
+
+
