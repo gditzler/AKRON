@@ -29,8 +29,8 @@ plot(I, errs_clean(4, 1:numel(I)), 'cp-', 'LineWidth', lw, 'MarkerSize', ms);%ak
 plot(I, errs_clean(6, 1:numel(I)), 'gs-', 'LineWidth', lw, 'MarkerSize', ms);%l1
 % plot(I, errs_clean(7, 1:numel(I)), 'bo-', 'LineWidth', 2);%l1n
 axis tight;
-xlim([8, M])
-ylim([0, 1.5])
+% xlim([8, M])
+% ylim([0, 1.5])
 % legend('KR', 'CoSamp', 'OMP', 'AKRON', 'AKRONoi', 'L1', 'L1n', 'Location', 'best');
 % columnlegend(2, {'KRON', 'CoSamp', 'OMP', 'AKRON', 'L1'}, 'fontsize', 50);
 legend('KRON', 'CoSamp', 'OMP', 'AKRON', 'L1', 'Location', 'best');
