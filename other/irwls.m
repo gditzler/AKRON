@@ -15,7 +15,7 @@ for i = 1:max_iter
       A*xhat == b;
   cvx_end
   
-  w = 1./(epsilon + xhat);
+  w = 1./(epsilon + abs(xhat));
   
 end
 x = xhat;
