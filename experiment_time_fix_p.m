@@ -15,7 +15,8 @@ Ms = floor([.05 .1 .15 .2 .25 .3 .35]*n);
 M = length(Ms);
 k_alg = 15;
 epsilon = 0.05;
-timez_A = zeros(5, M);
+timez_A = zeros(6, M);
+max_iter = 50;
 
 delete(gcp('nocreate'));
 parpool(90);
@@ -50,6 +51,11 @@ for i = 1:n_avg
     
     x_hat = SL0(A, y, 0.00001);
     timez_A(5, mm) = timez_A(5, mm) + toc;
+    
+    % run omp
+    tic; 
+    x_irwls = irwls(A, y, max_iter, 1e-3);
+    timez_A(6, mm) = timez_A(6, mm) + toc;
         
     mm = mm+1;
   end
