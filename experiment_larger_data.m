@@ -21,6 +21,8 @@ addpath('akron/');
 addpath('other/');
 addpath('sl0/');
 
+alg = 6;
+max_iter = 50;
 n_avg = 100;              % number of averages to run
 n_set = 50:25:250;        % "p" in the paper: # of variables 
 k_set = floor(.05*n_set); % sparest solution 
@@ -34,11 +36,11 @@ for mp = [.1 .2 .3 .4]
   errFcn = [];              % OMP/CoSaMP error function 
   DELTA = 1e-3;
 
-  errs = zeros(5, length(n_set));
-  stabilities = zeros(5, length(n_set));
-  errs_no_norm = zeros(5, length(n_set));
-  timez = zeros(5, length(n_set));
-  sparsity = zeros(5, length(n_set));
+  errs = zeros(alg, length(n_set));
+  stabilities = zeros(alg, length(n_set));
+  errs_no_norm = zeros(alg, length(n_set));
+  timez = zeros(alg, length(n_set));
+  sparsity = zeros(alg, length(n_set));
 
   for i = 1:n_avg
     disp(['Running trial ',num2str(i), ' of ', num2str(n_avg)]);
@@ -102,6 +104,18 @@ for mp = [.1 .2 .3 .4]
       disp('SL0')
       tic;
       x_hat = SL0(A, y, 0.00001);
+      timez(q, j) = timez(q, j) + toc;
+      errs(q, j) = errs(q, j) + per_error(x/norm(x), x_hat/norm(x_hat));
+      stabilities(q, j) = stabilities(q, j) + stability_error(x_ind, find(abs(x_hat)>DELTA), n);
+      errs_no_norm(q, j) = errs_no_norm(q, j) + per_error(x, x_hat);
+      sparsity(q, j) = sparsity(q, j) + sum(abs(x_hat) >= DELTA)/numel(x);
+      q = q+1;
+      
+      
+      % SL0
+      disp('SL0')
+      tic;
+      x_hat = irwls(A, y, max_iter, 1e-3);
       timez(q, j) = timez(q, j) + toc;
       errs(q, j) = errs(q, j) + per_error(x/norm(x), x_hat/norm(x_hat));
       stabilities(q, j) = stabilities(q, j) + stability_error(x_ind, find(abs(x_hat)>DELTA), n);

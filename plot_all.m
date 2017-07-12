@@ -148,7 +148,7 @@ for rr = 1:numel(Z)
   plot(n_set, errs_no_norm(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
   % legend('CoSamp', 'AKRON', 'L1', 'Location', 'best')
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'Location', 'best')
-  xlabel('p', 'FontSize', 20);
+  xlabel('n', 'FontSize', 20);
   ylabel('reconstruction error', 'FontSize', 20);
   box on;
   set(gca, 'fontsize', 20);
@@ -165,7 +165,7 @@ for rr = 1:numel(Z)
   plot(n_set, stabilities(4, :), 'rp-', 'LineWidth', lw, 'MarkerSize', ms) % L1
   plot(n_set, stabilities(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'Location', 'best')
-  xlabel('p', 'FontSize', 20);
+  xlabel('n', 'FontSize', 20);
   ylabel('stability', 'FontSize', 20);
   box on;
   set(gca, 'fontsize', 20);
@@ -182,7 +182,7 @@ for rr = 1:numel(Z)
   plot(n_set, timez(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
   % plot(n_set, log(timez(4, :)), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % L1
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'Location', 'best')
-  xlabel('p', 'FontSize', 20);
+  xlabel('n', 'FontSize', 20);
   ylabel('evaluation time', 'FontSize', 20);
   box on;
   set(gca, 'fontsize', 20);
@@ -191,5 +191,51 @@ for rr = 1:numel(Z)
   close all;
   clearvars -except rr Z
 end
+
+%% plot times 
+clc
+clear
+close all
+
+load('mat/timerz_fix_p.mat');
+
+lw = 4;
+ms = 25;
+fs = 20;
+
+i_kron = 1;
+i_akron = 4;
+i_akronoi = 6;
+i_cosamp = 2;
+i_omp = 3;
+i_sl0 = 8;
+i_l1 = 5;
+i_l1n = 7;
+
+m_kron = 'ro-';
+m_akron = 'c*-';
+m_akronoi = 'c*-';
+m_cosamp = 'b>-';
+m_omp = 'k^-';
+m_sl0 = 'rp-';
+m_l1 = 'gs-';
+m_l1n = 'gs-';
+
+
+h = figure; 
+grid on;
+hold on;
+box on;
+plot(Ms, timez_A(1, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms) % CoSaMP
+plot(Ms, timez_A(2, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms) % OMP
+plot(Ms, timez_A(3, :), m_akron, 'LineWidth', lw, 'MarkerSize', ms) % AKRON
+plot(Ms, timez_A(4, :), m_l1, 'LineWidth', lw, 'MarkerSize', ms) % AKRON
+plot(Ms, timez_A(5, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms) % SL0
+legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'Location', 'best')
+xlabel('n', 'FontSize', 20);
+ylabel('evaluation time', 'FontSize', 20);
+box on;
+set(gca, 'fontsize', 20);
+saveas(h, ['eps/times_fix_p.eps'], 'eps2c')
 
 
