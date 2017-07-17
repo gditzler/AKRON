@@ -124,7 +124,7 @@ for i = 1:n_avg
     
     % run akron-noisy
     timez_B(6, mm) = timez_B(1, mm) + tmz;
-    [x_akronnoi, x_l1n, ~, tmz] = akronoi(A, y, epsilon);
+    [x_akronnoi, x_l1n, ~, tmz] = akronoi2(A, y, epsilon);
     
     % run sl0
     tic;

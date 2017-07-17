@@ -20,13 +20,13 @@ s = size(X, 2); % "s=dim(ker(A))"
 n = size(A, 2);
 
 tic;
-
+epsilon2 = epsilon/2;
 % minimize the l1-norm
 cvx_begin quiet
   variable x(n,1)
   minimize(norm(x, 1))
   subject to
-    sum_square(A*x - y, 2) <= epsilon;
+    sum_square(A*x - y, 2) <= epsilon2;
 cvx_end
 
 % save the solution to the l1 problem before approximating the kernel
