@@ -3,7 +3,7 @@ clc
 clear
 close all
 
-load mat/experiments_fixP_sweepN_small_23-Feb-2017.mat
+load mat/experiments_fixP_sweepN_small_14-Jul-2017.mat
 
 lw = 4;
 ms = 25;
@@ -17,6 +17,7 @@ i_omp = 3;
 i_sl0 = 8;
 i_l1 = 5;
 i_l1n = 7;
+i_irwls = 9;
 
 m_kron = 'ro-';
 m_akron = 'c*-';
@@ -26,6 +27,7 @@ m_omp = 'k^-';
 m_sl0 = 'rp-';
 m_l1 = 'gs-';
 m_l1n = 'gs-';
+m_irwls = 'bd-';
 
 
 h1 = figure;
@@ -38,13 +40,14 @@ plot(Ps, errs_clean(i_l1, :), m_l1, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_clean(i_omp, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_clean(i_cosamp, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_clean(i_sl0, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, errs_clean(i_irwls, :), m_irwls, 'LineWidth', lw, 'MarkerSize', ms);
 axis tight;
 ylim([0 1.5])
-legend('KRON', 'AKRON', 'L1', 'OMP', 'CoSaMP', 'SL0', 'Location', 'best')
+legend('KRON', 'AKRON', 'L1', 'OMP', 'CoSaMP', 'SL0', 'IRL1M', 'Location', 'best')
 xlabel('n', 'FontSize', fs);
 ylabel('reconstruction error', 'FontSize', fs);
 set(gca, 'fontsize', fs);
-% saveas(h1, 'eps/experiments_fixP_sweepN_small_errors.eps', 'eps2c');
+saveas(h1, 'eps/experiments_fixP_sweepN_small_errors.eps', 'eps2c');
 
 
 h2 = figure;
@@ -57,12 +60,13 @@ plot(Ps, errs_clean_2(i_l1, :), m_l1, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_clean_2(i_omp, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_clean_2(i_cosamp, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_clean_2(i_sl0, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, errs_clean_2(i_irwls, :), m_irwls, 'LineWidth', lw, 'MarkerSize', ms);
 axis tight;
-legend('KRON', 'AKRON', 'L1', 'OMP', 'CoSaMP', 'SL0', 'Location', 'best')
+legend('KRON', 'AKRON', 'L1', 'OMP', 'CoSaMP', 'SL0', 'IRL1M', 'Location', 'best')
 xlabel('n', 'FontSize', fs);
 ylabel('stability', 'FontSize', fs);
 set(gca, 'fontsize', fs);
-% saveas(h2, 'eps/experiments_fixP_sweepN_small_stability.eps', 'eps2c');
+saveas(h2, 'eps/experiments_fixP_sweepN_small_stability.eps', 'eps2c');
 
 
 
@@ -76,13 +80,14 @@ plot(Ps, errs_noise(i_l1n, :), m_l1n, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_noise(i_omp, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_noise(i_cosamp, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_noise(i_sl0, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, errs_noise(i_irwls, :), m_irwls, 'LineWidth', lw, 'MarkerSize', ms);
 axis tight;
 ylim([0 1.5])
-legend('AKRONoi', 'L1', 'OMP', 'CoSaMP', 'SL0', 'Location', 'best')
+legend('AKRONoi', 'L1', 'OMP', 'CoSaMP', 'SL0', 'IRL1M', 'Location', 'best')
 xlabel('n', 'FontSize', fs);
 ylabel('reconstruction error', 'FontSize', fs);
 set(gca, 'fontsize', fs);
-% saveas(h3, 'eps/experiments_fixP_sweepN_small_errors_noise.eps', 'eps2c');
+saveas(h3, 'eps/experiments_fixP_sweepN_small_errors_noise.eps', 'eps2c');
 
 
 h4 = figure;
@@ -95,40 +100,47 @@ plot(Ps, errs_noise_2(i_l1n, :), m_l1n, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_noise_2(i_omp, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_noise_2(i_cosamp, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms);
 plot(Ps, errs_noise_2(i_sl0, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, errs_noise_2(i_irwls, :), m_irwls, 'LineWidth', lw, 'MarkerSize', ms);
 axis tight;
-legend('AKRONoi', 'L1', 'OMP', 'CoSaMP', 'SL0', 'Location', 'best')
+legend('AKRONoi', 'L1', 'OMP', 'CoSaMP', 'SL0', 'IRL1M', 'Location', 'best')
 xlabel('n', 'FontSize', fs);
 ylabel('stability', 'FontSize', fs);
 set(gca, 'fontsize', fs);
-% saveas(h4, 'eps/experiments_fixP_sweepN_small_stability_noise.eps', 'eps2c');
+saveas(h4, 'eps/experiments_fixP_sweepN_small_stability_noise.eps', 'eps2c');
 
 
 h5 = figure;
 hold on; 
 box on; 
 grid on;
-plot(Ps, timez_B(i_kron, :), m_kron, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(i_akronoi, :), m_akronoi, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(i_l1n, :), m_l1n, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(i_omp, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(i_cosamp, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(i_sl0, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_B(1, :), m_kron, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_B(4, :), m_akronoi, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_B(5, :), m_l1n, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_B(3, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_B(2, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_B(7, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_B(8, :), m_irwls, 'LineWidth', lw, 'MarkerSize', ms);
 axis tight;
-legend('KRON', 'AKRON', 'L1', 'OMP', 'CoSaMP', 'SL0', 'Location', 'best')
+legend('KRON', 'AKRON', 'L1', 'OMP', 'CoSaMP', 'SL0', 'IRL1M', 'Location', 'best')
 xlabel('n', 'FontSize', fs);
 ylabel('time', 'FontSize', fs);
 set(gca, 'fontsize', fs);
-% saveas(h5, 'eps/experiments_fixP_sweepN_small_time.eps', 'eps2c');
+saveas(h5, 'eps/experiments_fixP_sweepN_small_time.eps', 'eps2c');
 
 %% experiment_larger_data.m
 clc
 clear
 close all
 
-Z = {'mat/experiment_large_Gaussian_mp10_noise_25-Feb-2017.mat'
-  'mat/experiment_large_Gaussian_mp20_noise_25-Feb-2017.mat'
-  'mat/experiment_large_Gaussian_mp30_noise_26-Feb-2017.mat'
-  'mat/experiment_large_Gaussian_mp40_noise_26-Feb-2017.mat'};
+% Z = {'mat/experiment_large_Gaussian_mp10_noise_25-Feb-2017.mat'
+%   'mat/experiment_large_Gaussian_mp20_noise_25-Feb-2017.mat'
+%   'mat/experiment_large_Gaussian_mp30_noise_26-Feb-2017.mat'
+%   'mat/experiment_large_Gaussian_mp40_noise_26-Feb-2017.mat'};
+
+Z = {'mat/experiment_large_Gaussian_mp10_noise_14-Jul-2017.mat'
+  'mat/experiment_large_Gaussian_mp20_noise_15-Jul-2017.mat'
+  'mat/experiment_large_Gaussian_mp30_noise_15-Jul-2017.mat'
+  'mat/experiment_large_Gaussian_mp40_noise_16-Jul-2017.mat'};
 
 for rr = 1:numel(Z)
   load(Z{rr});
@@ -146,8 +158,9 @@ for rr = 1:numel(Z)
   plot(n_set, errs_no_norm(3, :), 'c*-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
   plot(n_set, errs_no_norm(4, :), 'rp-', 'LineWidth', lw, 'MarkerSize', ms) % L1
   plot(n_set, errs_no_norm(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
+  plot(n_set, errs_no_norm(6, :), 'bd-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
   % legend('CoSamp', 'AKRON', 'L1', 'Location', 'best')
-  legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'Location', 'best')
+  legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
   xlabel('n', 'FontSize', 20);
   ylabel('reconstruction error', 'FontSize', 20);
   box on;
@@ -164,7 +177,8 @@ for rr = 1:numel(Z)
   plot(n_set, stabilities(3, :), 'c*-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
   plot(n_set, stabilities(4, :), 'rp-', 'LineWidth', lw, 'MarkerSize', ms) % L1
   plot(n_set, stabilities(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
-  legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'Location', 'best')
+  plot(n_set, stabilities(6, :), 'bd-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
+  legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
   xlabel('n', 'FontSize', 20);
   ylabel('stability', 'FontSize', 20);
   box on;
@@ -180,8 +194,9 @@ for rr = 1:numel(Z)
   plot(n_set, timez(3, :), 'c*-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
   plot(n_set, timez(4, :), 'rp-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
   plot(n_set, timez(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
+  plot(n_set, timez(6, :), 'bd-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
   % plot(n_set, log(timez(4, :)), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % L1
-  legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'Location', 'best')
+  legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
   xlabel('n', 'FontSize', 20);
   ylabel('evaluation time', 'FontSize', 20);
   box on;
@@ -220,6 +235,7 @@ m_omp = 'k^-';
 m_sl0 = 'rp-';
 m_l1 = 'gs-';
 m_l1n = 'gs-';
+m_irwls = 'bd-';
 
 
 h = figure; 
@@ -231,7 +247,8 @@ plot(Ms, timez_A(2, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms) % OMP
 plot(Ms, timez_A(3, :), m_akron, 'LineWidth', lw, 'MarkerSize', ms) % AKRON
 plot(Ms, timez_A(4, :), m_l1, 'LineWidth', lw, 'MarkerSize', ms) % AKRON
 plot(Ms, timez_A(5, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms) % SL0
-legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'Location', 'best')
+plot(Ms, timez_A(6, :), m_irwls, 'LineWidth', lw, 'MarkerSize', ms) % SL0
+legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
 xlabel('n', 'FontSize', 20);
 ylabel('evaluation time', 'FontSize', 20);
 box on;

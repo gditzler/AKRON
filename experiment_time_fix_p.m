@@ -52,10 +52,11 @@ for i = 1:n_avg
     x_hat = SL0(A, y, 0.00001);
     timez_A(5, mm) = timez_A(5, mm) + toc;
     
-    % run omp
+    % run irwls
     tic; 
     x_irwls = irwls(A, y, max_iter, 1e-3);
     timez_A(6, mm) = timez_A(6, mm) + toc;
+    
         
     mm = mm+1;
   end
