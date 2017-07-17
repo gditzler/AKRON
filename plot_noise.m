@@ -3,7 +3,7 @@ clear
 close all
 
 load mat/noise_experiments.mat
-I = 5:M; %2:size(errs_no_norm,2);
+I = Ms;%5:M; %2:size(errs_no_norm,2);
 
 
 % errs_noise(1, mm) = errs_noise(1, mm) + per_error(x, x_kr_spar);
@@ -97,3 +97,23 @@ xlabel('n', 'FontSize', fs);
 ylabel('stability', 'FontSize', fs);
 set(gca, 'fontsize', fs);
 saveas(h, 'eps/noise_exp_noise_stability.eps', 'eps2c')
+
+%%
+h = figure; 
+hold on; grid on;
+box on;
+% plot(I, errs_noise_2(1, 1:numel(I)), 'ro-', 'LineWidth', lw, 'MarkerSize', ms);%kr
+% plot(I, timez_A(2, 1:numel(I)), 'b>-', 'LineWidth', lw, 'MarkerSize', ms);%cosamp
+plot(I, timez_A(3, 1:numel(I)), 'k^-', 'LineWidth', lw, 'MarkerSize', ms);%omp
+plot(I, timez_A(4, 1:numel(I)), 'cp-', 'LineWidth', lw, 'MarkerSize', ms);%akron
+plot(I, timez_A(5, 1:numel(I)), 'rs-', 'LineWidth', lw, 'MarkerSize', ms);%l1
+% plot(I, timez_A(6, 1:numel(I)), 'rs-', 'LineWidth', lw, 'MarkerSize', ms);%l1
+% plot(I, timez_A(7, 1:numel(I)), 'gs-', 'LineWidth', lw, 'MarkerSize', ms);%l1n
+% xlim([8, M])
+% ylim([0, 1.5])
+legend('OMP', 'AKRON', 'L1n', 'Location', 'best');
+% legend('KR', 'CoSamp', 'OMP', 'AKRON', 'AKRONoi', 'Location', 'best');
+xlabel('n', 'FontSize', fs);
+ylabel('time', 'FontSize', fs);
+set(gca, 'fontsize', fs);
+% saveas(h, 'eps/noise_exp_noise_stability.eps', 'eps2c')
