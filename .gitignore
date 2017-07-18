@@ -1,6 +1,7 @@
 #folders
 eps/
 pdf/
+.DS_Store
 
 #temps
 *.m~
