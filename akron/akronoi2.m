@@ -13,7 +13,7 @@ function [x_kr, x_l1, n_mins, tmz] = akronoi2(A, y, epsilon, shift)
 %  LICENSE
 %    MIT
 tmz = 0;
-if nargin == 2 
+if nargin == 3 
   shift = 3;
 end
 sparsity_threshold = 1e-3;
