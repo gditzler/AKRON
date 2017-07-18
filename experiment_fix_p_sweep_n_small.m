@@ -16,6 +16,7 @@ P = length(Ps);
 k_alg = 8;
 epsilon = 0.05;
 max_iter = 50;
+epsilon_irwls = .1;
 
 delete(gcp('nocreate'));
 parpool(40);
@@ -75,7 +76,7 @@ for i = 1:n_avg
     
     % run irwls
     tic;
-    x_irwls = irwls(A, y, max_iter, 1e-3);
+    x_irwls = irwls(A, y, max_iter, epsilon_irwls);
     timez_A(8, mm) = timez_A(8, mm) + toc;
 
     errs_clean(1, mm) = errs_clean(1, mm) + per_error(x, x_kron_spar);

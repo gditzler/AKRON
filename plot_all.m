@@ -27,7 +27,7 @@ m_omp = 'k^-';
 m_sl0 = 'rp-';
 m_l1 = 'gs-';
 m_l1n = 'gs-';
-m_irwls = 'bd-';
+m_irwls = 'md-';
 
 
 h1 = figure;
@@ -158,7 +158,7 @@ for rr = 1:numel(Z)
   plot(n_set, errs_no_norm(3, :), 'c*-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
   plot(n_set, errs_no_norm(4, :), 'rp-', 'LineWidth', lw, 'MarkerSize', ms) % L1
   plot(n_set, errs_no_norm(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
-  plot(n_set, errs_no_norm(6, :), 'bd-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
+  plot(n_set, errs_no_norm(6, :), 'md-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
   % legend('CoSamp', 'AKRON', 'L1', 'Location', 'best')
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
   xlabel('n', 'FontSize', 20);
@@ -177,7 +177,7 @@ for rr = 1:numel(Z)
   plot(n_set, stabilities(3, :), 'c*-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
   plot(n_set, stabilities(4, :), 'rp-', 'LineWidth', lw, 'MarkerSize', ms) % L1
   plot(n_set, stabilities(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
-  plot(n_set, stabilities(6, :), 'bd-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
+  plot(n_set, stabilities(6, :), 'md-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
   xlabel('n', 'FontSize', 20);
   ylabel('stability', 'FontSize', 20);
@@ -194,7 +194,7 @@ for rr = 1:numel(Z)
   plot(n_set, timez(3, :), 'c*-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
   plot(n_set, timez(4, :), 'rp-', 'LineWidth', lw, 'MarkerSize', ms) % AKRON
   plot(n_set, timez(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
-  plot(n_set, timez(6, :), 'bd-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
+  plot(n_set, timez(6, :), 'md-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
   % plot(n_set, log(timez(4, :)), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % L1
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
   xlabel('n', 'FontSize', 20);

@@ -26,6 +26,7 @@ max_iter = 50;
 n_avg = 100;              % number of averages to run
 n_set = 50:25:250;        % "p" in the paper: # of variables 
 k_set = floor(.05*n_set); % sparest solution 
+epsilon_irwls = .1;
 
 for mp = [.1 .2 .3 .4]
   % .1 .2 .3 .4
@@ -115,7 +116,7 @@ for mp = [.1 .2 .3 .4]
       % SL0
       disp('SL0')
       tic;
-      x_hat = irwls(A, y, max_iter, 1e-3);
+      x_hat = irwls(A, y, max_iter, epsilon_irwls);
       timez(q, j) = timez(q, j) + toc;
       errs(q, j) = errs(q, j) + per_error(x/norm(x), x_hat/norm(x_hat));
       stabilities(q, j) = stabilities(q, j) + stability_error(x_ind, find(abs(x_hat)>DELTA), n);
