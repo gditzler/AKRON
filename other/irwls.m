@@ -3,7 +3,6 @@ function x = irwls(A, b, max_iter, epsilon)
 [~, p] = size(A);
 w = ones(p, 1);
 
-
 for i = 1:max_iter
   
   W = diag(w);
@@ -16,9 +15,8 @@ for i = 1:max_iter
   cvx_end
   
   w = 1./(epsilon + abs(xhat));
-  
 end
 x = xhat;
-x(abs(x)<epsilon) = 0;
+x(abs(x)<1e-3) = 0;
 
 
