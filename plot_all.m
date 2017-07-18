@@ -10,13 +10,13 @@ ms = 25;
 fs = 20;
 
 i_kron = 1;
-i_akron = 4;
-i_akronoi = 6;
 i_cosamp = 2;
 i_omp = 3;
-i_sl0 = 8;
-i_l1 = 5;
+i_akron = 4;
+i_akronoi = 5;
+i_l1 = 6;
 i_l1n = 7;
+i_sl0 = 8;
 i_irwls = 9;
 
 m_kron = 'ro-';

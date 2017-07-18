@@ -18,5 +18,3 @@ for i = 1:max_iter
 end
 x = xhat;
 x(abs(x)<1e-3) = 0;
-
-
