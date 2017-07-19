@@ -66,7 +66,7 @@ for i = 1:n_avg
     timez_A(5, mm) = timez_A(5, mm) + tmzl1;
     
     % run akron-noisy
-    [x_akronnoi, x_l1n, ~, tmz] = akronoi(A, y, epsilon);
+    [x_akronnoi, x_l1n, ~, tmz] = akronoi2(A, y, epsilon);
     timez_A(6, mm) = timez_A(6, mm) + tmz;
     
     % run sl0
@@ -177,5 +177,5 @@ timez_B = timez_B/n_avg;
 % var_errs_noise_2 = errs_noise_2 - errs_noise.^2';
 % var_errs_clean_unit_2 = errs_clean_unit_2 - errs_clean_unit.^2';
 % var_errs_noise_unit_2 = errs_noise_unit_2 - errs_noise_unit.^2';
-save(['mat/experiments_fixP_sweepN_small_', date, '.mat']);
+save(['mat/experiments2_fixP_sweepN_small_', date, '.mat']);
 
