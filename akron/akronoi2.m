@@ -62,7 +62,7 @@ parfor r = 1:size(combrows, 1)
   [~, q] = sort(abs(x_kr));
   x_kr_final = x_kr;
 
-  x_kr_final(abs(x_kr_final) <= epsilon/(sqrt(size(A,2))*norm(A, 'fro')));
+  x_kr_final(abs(x_kr_final) <= epsilon/(sqrt(size(A,2))*norm(A, 'fro')))=0;
 
   sp(r) = sum(abs(x_kr_final) > sparsity_threshold);  % sparsity 
   err(r) = norm(x_kr, 1);
@@ -86,6 +86,6 @@ end
 xhat = A(:, j)\y;
 x_kr = zeros(n,1);
 x_kr(j) = xhat;
-x_kr(abs(x_kr) <= epsilon/(sqrt(size(A,2))*norm(A, 'fro')));
+x_kr(abs(x_kr) <= epsilon/(sqrt(size(A,2))*norm(A, 'fro'))) = 0;
 tmz = tmz + toc;
 

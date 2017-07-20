@@ -3,7 +3,10 @@ clc
 clear
 close all
 
-load mat/experiments_fixP_sweepN_small_14-Jul-2017.mat
+% mat/experiments_fixP_sweepN_small_14-Jul-2017.mat
+% mat/experiments2_fixP_sweepN_small_19-Jul-2017.mat
+% mat/experiments_fixP_sweepN_small_19-Jul-2017.mat
+load mat/experiments2_fixP_sweepN_small_19-Jul-2017.mat
 
 lw = 4;
 ms = 25;
@@ -113,13 +116,13 @@ h5 = figure;
 hold on; 
 box on; 
 grid on;
-plot(Ps, timez_B(1, :), m_kron, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(4, :), m_akronoi, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(5, :), m_l1n, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(3, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(2, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(7, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms);
-plot(Ps, timez_B(8, :), m_irwls, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_A(1, :), m_kron, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_A(4, :), m_akronoi, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_A(5, :), m_l1n, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_A(3, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_A(2, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_A(7, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms);
+plot(Ps, timez_A(8, :), m_irwls, 'LineWidth', lw, 'MarkerSize', ms);
 axis tight;
 legend('KRON', 'AKRON', 'L1', 'OMP', 'CoSaMP', 'SL0', 'IRL1M', 'Location', 'best')
 xlabel('n', 'FontSize', fs);
