@@ -164,7 +164,7 @@ for rr = 1:numel(Z)
   plot(n_set, errs_no_norm(6, :), 'md-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
   % legend('CoSamp', 'AKRON', 'L1', 'Location', 'best')
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
-  xlabel('n', 'FontSize', 20);
+  xlabel('p', 'FontSize', 20);
   ylabel('reconstruction error', 'FontSize', 20);
   box on;
   set(gca, 'fontsize', 20);
@@ -182,7 +182,7 @@ for rr = 1:numel(Z)
   plot(n_set, stabilities(5, :), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % SL0
   plot(n_set, stabilities(6, :), 'md-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
-  xlabel('n', 'FontSize', 20);
+  xlabel('p', 'FontSize', 20);
   ylabel('stability', 'FontSize', 20);
   box on;
   set(gca, 'fontsize', 20);
@@ -200,7 +200,7 @@ for rr = 1:numel(Z)
   plot(n_set, timez(6, :), 'md-', 'LineWidth', lw, 'MarkerSize', ms) % IRL1M
   % plot(n_set, log(timez(4, :)), 'gs-', 'LineWidth', lw, 'MarkerSize', ms) % L1
   legend('CoSamp', 'OMP', 'AKRON', 'L1', 'SL0', 'IRL1M', 'Location', 'best')
-  xlabel('n', 'FontSize', 20);
+  xlabel('p', 'FontSize', 20);
   ylabel('evaluation time', 'FontSize', 20);
   box on;
   set(gca, 'fontsize', 20);
@@ -246,7 +246,7 @@ grid on;
 hold on;
 box on;
 plot(Ms, timez_A(1, :), m_cosamp, 'LineWidth', lw, 'MarkerSize', ms) % CoSaMP
-plot(Ms, timez_A(2, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms) % OMP
+plot(Ms, timez_A(2, :), m_omp, 'LineWidth', lw, 'MarkerSize', ms)    % OMP
 plot(Ms, timez_A(3, :), m_akron, 'LineWidth', lw, 'MarkerSize', ms) % AKRON
 plot(Ms, timez_A(4, :), m_l1, 'LineWidth', lw, 'MarkerSize', ms) % AKRON
 plot(Ms, timez_A(5, :), m_sl0, 'LineWidth', lw, 'MarkerSize', ms) % SL0
