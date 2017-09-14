@@ -32,6 +32,8 @@ cvx_begin quiet
     A*x == y; 
 cvx_end
 
+
+
 tmz = tmz + toc;
 tmzl1 = tmz;
 % save the solution to the l1 problem before approximating the kernel

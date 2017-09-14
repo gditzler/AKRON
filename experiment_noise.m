@@ -8,7 +8,7 @@ addpath('akron/');
 addpath('other/');
 addpath('sl0/');
 
-n_avg = 100;
+n_avg = 50;
 p = 20;
 k = 8;
 Ps = 7:19; 

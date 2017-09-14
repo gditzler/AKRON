@@ -17,9 +17,6 @@ sparsity_threshold = 1e-3;
 if nargin == 2 
   shift = 3;
 end
-
-X = null(A);
-% s = size(X, 2); % "s=dim(ker(A))"
 s = size(A, 2)-size(A,1);
 n = size(A, 2);
 
@@ -102,7 +99,6 @@ subject to
   norm(Ah*xhat - y, 2) <= epsilon;
 cvx_end
 
-% xhat = A(:, j)\y;
 x_kr = zeros(n,1);
 x_kr(j) = xhat;
 tmz = tmz + toc;
