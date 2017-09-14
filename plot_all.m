@@ -240,7 +240,7 @@ m_l1 = 'gs-';
 m_l1n = 'gs-';
 m_irwls = 'bd-';
 
-
+timez_A = timez_A/i;
 h = figure; 
 grid on;
 hold on;
