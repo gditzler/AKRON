@@ -54,7 +54,11 @@ y = A*x + e;
 epsilon = norm(e);
 
 % run AKRON 
-[x_kr, x_l1] = akron(A, y, shift, epsilon);
-[x_krn, x_l1n] = akronoi(A, y, epsilon);
-[x_krn2, x_l1n2] = akronoi2(A, y, epsilon, shift);
+% [x_kr, x_l1] = akron(A, y, shift, epsilon);
+% [x_krn, x_l1n] = akronoi(A, y, epsilon);
+[x_krn2, x_l1n2] = akronoi2(A, y, shift, epsilon);
 
+disp('Reconstuction Error: ');
+disp(['L1n:    ', num2str(norm(x-x_l1n2)/norm(x))]);
+disp(['AKRON: ', num2str(norm(x-x_krn2)/norm(x))]);
+[x'; x_krn2'; x_l1n2']
